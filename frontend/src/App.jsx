@@ -5,6 +5,7 @@ import "./app.css";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+
 const App = () => {
     const Layout = () => {
         return (
@@ -37,8 +38,9 @@ const App = () => {
     ]);
 
     return (
-        <div className="flex justify-center items-center">
-            <div className="App font-heading max-w-[1240px] w-full">
+        <div className="flex justify-center min-h-screen">
+            {/* App container with responsive width */}
+            <div className="App font-heading w-full max-w-[343px]  md:max-w-[704px] lg:max-w-[1240px]">
                 <RouterProvider router={router} />
             </div>
         </div>

@@ -176,8 +176,6 @@ const SignupPage = () => {
                             className="w-full outline-none border-2 border-gray-300 px-4 py-3 rounded-sm focus:ring-2 focus:border-none focus:ring-primary transition-all"
                         />
                     </div>
-
-                    {/* Gender Selection */}
                     <div className="flex gap-4 items-center justify-between">
                         <label className="text-sm text-gray-600">Gender:</label>
                         <div className="flex gap-3 items-center">
