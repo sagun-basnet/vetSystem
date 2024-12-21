@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#8870e6",
-        darkPrimary:"#6146cd",
-        lightPrimary:"#ad99fe",
+        primary: "#4caf50",
+        darkPrimary: "#6146cd",
+        lightPrimary: "#ad99fe",
         sliver: "#c0c0c0",
         bgbtn: "#f1f1f1",
         bgbtnHover: "#d6d6d6",
