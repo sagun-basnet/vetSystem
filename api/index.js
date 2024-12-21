@@ -16,8 +16,9 @@ app.use(
   })
 );
 const port = process.env.PORT;
+const host = process.env.HOST;
 
 app.use("/api", authRoute);
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(port, host, () => {
+  console.log(`Server is running on port ${host}:${port}`);
 });
