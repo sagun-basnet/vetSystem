@@ -18,10 +18,10 @@ app.use(
   })
 );
 const port = process.env.PORT;
-const host = process.env.HOST;
+// const host = process.env.HOST;
 
 app.use("/api", authRoute);
 app.use("/api", postRoute);
 app.listen(port, host, () => {
-  console.log(`Server is running on port ${host}:${port}`);
+  console.log(`Server is running on port ${port}`);
 });

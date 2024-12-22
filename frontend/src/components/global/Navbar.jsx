@@ -28,13 +28,16 @@ const Navbar = () => {
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <button className="px-[28px] py-[12px] font-semibold text-[15px] leading-[22px] text-primary rounded-sm">
-                            Sign Up
-                        </button>
-
-                        <button className="px-[28px] py-[12px] bg-primary font-semibold text-[15px] leading-[22px] text-white rounded-sm ">
-                            Log In
-                        </button>
+                        <Link to='/signup'>
+                            <button className="px-[28px] py-[12px] font-semibold text-[15px] leading-[22px] text-primary rounded-sm">
+                                Sign Up
+                            </button>
+                        </Link>
+                        <Link to='/login'>
+                            <button className="px-[28px] py-[12px] bg-primary font-semibold text-[15px] leading-[22px] text-white rounded-sm ">
+                                Log In
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </nav>
