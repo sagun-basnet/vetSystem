@@ -1,37 +1,32 @@
 import { useState } from "react";
+import { post } from "../utils/api";
 
 const SignupPage = () => {
     const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
+        name: "",
+        // lastName: "",
         email: "",
         password: "",
-        confirmPassword: "",
         address: "",
         phone: "",
-        gender: "",
+        role_id: 3,
     });
     console.log(formData);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (
-            !formData.firstName ||
-            !formData.lastName ||
+            !formData.name ||
             !formData.email ||
             !formData.password ||
-            !formData.confirmPassword ||
             !formData.address ||
             !formData.phone
         ) {
             alert("Please fill in all fields");
             return;
         }
-
-        if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match");
-            return;
-        }
+        const res = post("/api/register", formData);
+        console.log(res);
 
         alert(`Registration successful! Email: ${formData}`);
     };
@@ -61,27 +56,10 @@ const SignupPage = () => {
                             </label>
                             <input
                                 type="text"
-                                name="firstName"
-                                value={formData.firstName}
+                                name="name"
+                                value={formData.name}
                                 onChange={handleChange}
                                 id="firstName"
-                                className="w-full outline-none border-2 border-gray-300 px-4 py-3 rounded-sm focus:ring-2 focus:border-none focus:ring-primary transition-all"
-                            />
-                        </div>
-
-                        <div className="relative w-full">
-                            <label
-                                htmlFor="password"
-                                className=" text-sm text-gray-700 pl-1"
-                            >
-                                Last Name
-                            </label>
-                            <input
-                                type="text"
-                                name="lastName"
-                                value={formData.lastName}
-                                onChange={handleChange}
-                                id="lastName"
                                 className="w-full outline-none border-2 border-gray-300 px-4 py-3 rounded-sm focus:ring-2 focus:border-none focus:ring-primary transition-all"
                             />
                         </div>
@@ -178,60 +156,7 @@ const SignupPage = () => {
                     </div>
 
                     {/* Gender Selection */}
-                    <div className="flex gap-4 items-center justify-between">
-                        <label className="text-sm text-gray-600">Gender:</label>
-                        <div className="flex gap-3 items-center">
-                            <label
-                                htmlFor="male"
-                                className="text-sm text-gray-600"
-                            >
-                                Male
-                            </label>
-                            <input
-                                type="radio"
-                                name="gender"
-                                value="male"
-                                id="male"
-                                checked={formData.gender === "male"}
-                                onChange={handleChange}
-                                className="form-radio"
-                            />
-                        </div>
-                        <div className="flex gap-3 items-center">
-                            <label
-                                htmlFor="female"
-                                className="text-sm text-gray-600"
-                            >
-                                Female
-                            </label>
-                            <input
-                                type="radio"
-                                name="gender"
-                                value="female"
-                                id="female"
-                                checked={formData.gender === "female"}
-                                onChange={handleChange}
-                                className="form-radio"
-                            />
-                        </div>
-                        <div className="flex gap-3 items-center">
-                            <label
-                                htmlFor="other"
-                                className="text-sm text-gray-600"
-                            >
-                                Other
-                            </label>
-                            <input
-                                type="radio"
-                                name="gender"
-                                value="other"
-                                id="other"
-                                checked={formData.gender === "other"}
-                                onChange={handleChange}
-                                className="form-radio"
-                            />
-                        </div>
-                    </div>
+
 
                     <button
                         type="submit"

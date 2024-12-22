@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { post } from "../../utils/api";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -12,7 +13,10 @@ const Login = () => {
             alert("Please fill in all fields");
             return;
         }
-        alert(`Email: ${formData.email}, Password: ${formData.password}`);
+        const res = post("/api/login", formData);
+        console.log(res);
+
+        alert(`Login Sucessfully. Email: ${formData.email}, Password: ${formData.password}`);
     };
 
     const handleChange = (e) => {
@@ -34,7 +38,7 @@ const Login = () => {
                         <label
                             htmlFor="email"
                             className="text-sm text-gray-700 pl-1"
-                            
+
                         >
                             Email
                         </label>
@@ -52,7 +56,7 @@ const Login = () => {
                         <label
                             htmlFor="password"
                             className=" text-sm text-gray-700 pl-1"
-                            
+
                         >
                             Password
                         </label>
