@@ -1,9 +1,14 @@
-import React from 'react'
+import { useState } from "react";
+import Login from "../components/form/Login";
 
 const LoginPage = () => {
+    
     return (
-        <div>LoginPage</div>
-    )
-}
+                   
+        <div>
+            <Login/>
+        </div>
+    );
+};
 
-export default LoginPage
+export default LoginPage;
