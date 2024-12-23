@@ -13,7 +13,7 @@ const Main = () => {
             {/* Right Side: Text and Button */}
             <div className="flex-1 flex flex-col gap-4 justify-center items-center">
                 <div className="space-y-3 flex flex-col">
-                    <h1 className="font-bold text-[35px] sm:text-[45px] md:text-[55px] text-primary text-center">
+                    <h1 className="font-bold text-[35px] sm:text-[45px] md:text-[55px] text-primary">
                         Growing Dreams, <br />Harvesting Success
                     </h1>
                     <p className="font-medium text-justify text-sm sm:text-base md:text-lg">
