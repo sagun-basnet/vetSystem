@@ -1,9 +1,13 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { AuthContext } from "../../context/authContext";
 
 const Navbar = () => {
+    const { currentUser } = useContext(AuthContext);
     const [open, setOpen] = useState(false);
+    console.log(currentUser);
+
 
     return (
         <div className="flex justify-center  bg-white sticky top-0 text-[#272D37] h-[86px]">
@@ -38,6 +42,7 @@ const Navbar = () => {
                                 Log In
                             </button>
                         </Link>
+                        <span>{currentUser.name}</span>
                     </div>
                 </div>
             </nav>

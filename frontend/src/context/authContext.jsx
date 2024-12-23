@@ -1,16 +1,19 @@
 import { createContext, useEffect, useState } from "react";
 import { post } from "../utils/api";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
-const AuthContextProvider = ({ children }) => {
+export const AuthContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(
         JSON.parse(localStorage.getItem("user")) || null
     );
 
     const login = async (inputs) => {
         const res = await post('/api/login', inputs);
-        setCurrentUser(res.data);
+        setCurrentUser(res.others);
+        console.log(res.others, "res");
+
+        return res;
     };
 
     const logout = async () => {
@@ -33,4 +36,4 @@ const AuthContextProvider = ({ children }) => {
     );
 };
 
-export { AuthContext, AuthContextProvider };
+// export { AuthContext, AuthContextProvider };
