@@ -33,6 +33,19 @@ const Navbar = () => {
                         <button className="px-6 py-3 bg-primary font-semibold text-[15px] leading-[22px] text-white rounded-sm">
                             Log In
                         </button>
+
+</div>
+                    <div className="flex items-center gap-2">
+                        <Link to='/signup'>
+                            <button className="px-[28px] py-[12px] font-semibold text-[15px] leading-[22px] text-primary rounded-sm">
+                                Sign Up
+                            </button>
+                        </Link>
+                        <Link to='/login'>
+                            <button className="px-[28px] py-[12px] bg-primary font-semibold text-[15px] leading-[22px] text-white rounded-sm ">
+                                Log In
+                            </button>
+                        </Link>
                     </div>
                 </div>
                 <div className="lg:hidden">
