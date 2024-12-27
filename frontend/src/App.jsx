@@ -5,13 +5,25 @@ import "./app.css";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import Topbar from "./components/admin/TopBar";
+import AdminMain from "./pages/AdminMain";
+import User from "./components/admin/User";
 
 const App = () => {
+    // User Layout with Navbar
     const Layout = () => {
         return (
             <>
                 <Navbar />
                 <Outlet />
+            </>
+        );
+    };
+
+    const AdminLayout = () => {
+        return (
+            <>
+                <AdminMain />
             </>
         );
     };
@@ -35,11 +47,20 @@ const App = () => {
             path: "/signup",
             element: <SignupPage />,
         },
+        {
+            path: "/admin",
+            element: <AdminLayout />,
+            children: [
+                {
+                    path: "user",
+                    element: <User />,
+                },
+            ],
+        },
     ]);
 
     return (
         <div className="flex justify-center min-h-screen">
-            {/* App container with responsive width */}
             <div className="App font-heading w-full max-w-[343px]  md:max-w-[704px] lg:max-w-[1240px]">
                 <RouterProvider router={router} />
             </div>

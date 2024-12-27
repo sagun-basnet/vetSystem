@@ -38,7 +38,10 @@ export const login = (req, res) => {
 
     if (!checkPassword) return res.status(400).json("Password not match");
 
-    const token = jwt.sign({ id: data[0].id }, "secretkey");
+    const token = jwt.sign(
+      { id: data[0].id, role_id: data[0].role_id },
+      "secretkey"
+    );
 
     const { password, ...others } = data[0];
     res

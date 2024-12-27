@@ -1,22 +1,29 @@
-import { useState } from "react";
-import { post } from "../../utils/api";
+import { useContext, useState } from "react";
+// import { post } from "../../utils/api";
+import { AuthContext } from "../../context/authContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext)
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!formData.email || !formData.password) {
             alert("Please fill in all fields");
             return;
         }
-        const res = post("/api/login", formData);
+
+        const res = await login(formData);
+        // const res = post("/api/login", formData);
         console.log(res);
 
         alert(`Login Sucessfully. Email: ${formData.email}, Password: ${formData.password}`);
+        navigate('/')
     };
 
     const handleChange = (e) => {
