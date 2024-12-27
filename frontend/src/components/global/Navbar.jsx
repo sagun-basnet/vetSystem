@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState, useContext } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
@@ -6,15 +6,18 @@ import { AuthContext } from "../../context/authContext";
 const Navbar = () => {
     const { currentUser } = useContext(AuthContext);
     const [open, setOpen] = useState(false);
+
+    const handleLinkClick = () => setOpen(false);
+
     return (
-        <div className="flex justify-center h-[64px]  bg-white sticky top-0 text-[#272D37] lg:h-[86px]">
+        <div className="flex justify-center h-[64px] bg-white sticky top-0 text-[#272D37] lg:h-[86px]">
             <nav className="flex justify-between items-center max-w-[343px] w-full md:max-w-[704px] lg:max-w-full relative">
                 <div className="flex items-center h-[32px] justify-between lg:w-full">
                     <div className="flex gap-[64px]">
-                        <Link to="/">Vet Program</Link>
+                        <Link to="/" onClick={handleLinkClick}>Vet Program</Link>
                         <div className="hidden lg:flex items-center">
                             <ul className="flex gap-[32px] font-semibold text-[15px] leading-[22px]">
-                                <Link to="/">
+                                <Link to="/" onClick={handleLinkClick}>
                                     <li>Home</li>
                                 </Link>
 
@@ -22,22 +25,33 @@ const Navbar = () => {
                                 <li className="flex gap-[8px] items-center">
                                     <span>Resources</span>
                                 </li>
-                                <Link to="/contact">
+                                <Link to="/contact" onClick={handleLinkClick}>
                                     <li>Contacts</li>
                                 </Link>
                             </ul>
                         </div>
                     </div>
-                    <div className="hidden lg:flex items-center gap-2">
-                        <button className="px-6 py-3 font-semibold text-[15px] leading-[22px] text-primary rounded-sm">
-                            Sign Up
-                        </button>
-                        <button className="px-6 py-3 bg-primary font-semibold text-[15px] leading-[22px] text-white rounded-sm">
-                            Log In
-                        </button>
-                    </div>
 
+                    <div className="hidden lg:flex items-center gap-2">
+                        {currentUser ? (
+                            <span>{currentUser.name}</span>
+                        ) : (
+                            <>
+                                <Link to='/signup'>
+                                    <button className="px-[28px] py-[12px] font-semibold text-[15px] leading-[22px] text-primary rounded-sm">
+                                        Sign Up
+                                    </button>
+                                </Link>
+                                <Link to='/login'>
+                                    <button className="px-[28px] py-[12px] bg-primary font-semibold text-[15px] leading-[22px] text-white rounded-sm">
+                                        Log In
+                                    </button>
+                                </Link>
+                            </>
+                        )}
+                    </div>
                 </div>
+
                 <div className="lg:hidden">
                     {open ? (
                         <FaTimes
@@ -50,29 +64,36 @@ const Navbar = () => {
                             onClick={() => setOpen((prev) => !prev)}
                         />
                     )}
+
                     {open && (
                         <div className="absolute top-[64px] right-0 bg-white flex justify-center items-center px-16 py-10 md:px-[170px] border rounded-sm border-[#EAEBF0]">
-                            <ul className="flex flex-col  items-center gap-[48px] font-semibold text-[15px] leading-[22px]">
-                                <Link to="/">
+                            <ul className="flex flex-col items-center gap-[48px] font-semibold text-[15px] leading-[22px]">
+                                <Link to="/" onClick={handleLinkClick}>
                                     <li>Home</li>
                                 </Link>
                                 <li>Our Products</li>
                                 <li className="flex gap-[8px] items-center">
                                     <span>Resources</span>
                                 </li>
-                                <Link to="/contact">
+                                <Link to="/contact" onClick={handleLinkClick}>
                                     <li>Contacts</li>
                                 </Link>
-                                <li>
-                                    <button className="px-6 py-3 font-semibold text-[15px] leading-[22px] text-primary rounded-sm">
-                                        Sign Up
-                                    </button>
-                                </li>
-                                <li>
-                                    <button className="px-6 py-3 bg-primary font-semibold text-[15px] leading-[22px] text-white rounded-sm">
-                                        Log In
-                                    </button>
-                                </li>
+                                {currentUser ? (
+                                    <span>{currentUser.name}</span>
+                                ) : (
+                                    <>
+                                        <Link to='/signup'>
+                                            <button className="px-6 py-3 font-semibold text-[15px] leading-[22px] text-primary rounded-sm">
+                                                Sign Up
+                                            </button>
+                                        </Link>
+                                        <Link to='/login'>
+                                            <button className="px-6 py-3 bg-primary font-semibold text-[15px] leading-[22px] text-white rounded-sm">
+                                                Log In
+                                            </button>
+                                        </Link>
+                                    </>
+                                )}
                             </ul>
                         </div>
                     )}
