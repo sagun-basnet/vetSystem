@@ -8,7 +8,7 @@ import Topbar from "../components/admin/TopBar";
 const AdminMain = () => {
     return (
         <div className="flex">
-            <div className="h-[100vh] w-[18%] ">
+            <div className="h-[100vh] w-[260px] ">
                 <AdminSidebar />
             </div>
             <div className="w-[82%] h-[100vh] flex flex-col bg-[#F1F5F9]">
