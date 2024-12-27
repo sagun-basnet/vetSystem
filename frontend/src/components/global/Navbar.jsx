@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/authContext";
 
 const Navbar = () => {
     const { currentUser } = useContext(AuthContext);
@@ -35,7 +36,7 @@ const Navbar = () => {
                             Log In
                         </button>
                     </div>
-                    
+
                 </div>
                 <div className="lg:hidden">
                     {open ? (
