@@ -5,6 +5,7 @@ import authRoute from "./routes/authRoute.js";
 import postRoute from "./routes/postRoute.js";
 import adminRoute from "./routes/adminRoute.js";
 import userRoute from "./routes/userRoute.js";
+import appointmentRoute from "./routes/appointmentRoute.js";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/api", authRoute);
 app.use("/api", userRoute);
 app.use("/api", adminRoute);
 app.use("/api", postRoute);
+app.use("/api", appointmentRoute);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
