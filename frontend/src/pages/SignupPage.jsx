@@ -52,7 +52,7 @@ const SignupPage = () => {
                                 htmlFor="password"
                                 className=" text-sm text-gray-700 pl-1"
                             >
-                                First Name
+                                Full Name
                             </label>
                             <input
                                 type="text"
