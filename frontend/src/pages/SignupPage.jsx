@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { post } from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
         // lastName: "",
@@ -29,6 +31,7 @@ const SignupPage = () => {
         console.log(res);
 
         alert(`Registration successful! Email: ${formData}`);
+        navigate('/')
     };
 
     const handleChange = (e) => {
