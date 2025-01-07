@@ -5,9 +5,14 @@ import "./app.css";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
-import Topbar from "./components/admin/TopBar";
 import AdminMain from "./pages/AdminMain";
-import User from "./components/admin/User";
+import User from "./components/admin/user/User";
+import Dashboard from "./components/admin/global/Dashboard";
+import Doctor from "./components/admin/doctor/Doctor";
+import Post from "./components/admin/post/Post";
+import UserAdd from "./components/admin/user/UserAdd";
+import DoctorAdd from "./components/admin/doctor/DoctorAdd";
+import UserUpdate from "./components/admin/user/UserUpdate";
 
 const App = () => {
     // User Layout with Navbar
@@ -52,8 +57,32 @@ const App = () => {
             element: <AdminLayout />,
             children: [
                 {
+                    path: "",
+                    element: <Dashboard />,
+                },
+                {
                     path: "user",
                     element: <User />,
+                },
+                {
+                    path: "adduser",
+                    element: <UserAdd />,
+                },
+                {
+                    path: "updateuser/:id",
+                    element: <UserUpdate />,
+                },
+                {
+                    path: "doctor",
+                    element: <Doctor />,
+                },
+                {
+                    path: "adddoctor",
+                    element: <DoctorAdd />,
+                },
+                {
+                    path: "post",
+                    element: <Post />,
                 },
             ],
         },

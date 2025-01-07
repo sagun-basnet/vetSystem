@@ -5,7 +5,7 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { LuUsers } from "react-icons/lu";
 import { PiProjectorScreenChart } from "react-icons/pi";
-import { FaQrcode } from "react-icons/fa6";
+import { FaQrcode, FaUserDoctor } from "react-icons/fa6";
 import { FaLaptopMedical } from "react-icons/fa";
 import { MdManageHistory } from "react-icons/md";
 import { Link } from "react-router-dom";
@@ -100,10 +100,9 @@ const AdminSidebar = () => {
                         {/* <!-- Logo --> */}
                         <a
                             class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
-                            href="#"
-                            aria-label="Preline"
+                            // href="/admin"
                         >
-                            <h2 className="text-white">AroHealth</h2>
+                            <h2 className="text-white">Vet System</h2>
                         </a>
                         {/* <!-- End Logo --> */}
                     </div>
@@ -116,7 +115,7 @@ const AdminSidebar = () => {
                         >
                             <ul class="flex flex-col space-y-1">
                                 <li class="hs-accordion" id="users-accordion">
-                                    <Link to="/user/dashboard">
+                                    <Link to="/admin">
                                         <button
                                             type="button"
                                             class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
@@ -129,15 +128,15 @@ const AdminSidebar = () => {
                                     </Link>
                                 </li>
                                 <li class="hs-accordion" id="users-accordion">
-                                    <Link to="/user/dashboard/chat">
+                                    <Link to="/admin/user">
                                         <button
                                             type="button"
                                             class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
                                             aria-expanded="true"
                                             aria-controls="users-accordion-child"
                                         >
-                                            <IoChatboxEllipsesOutline className="text-lg" />
-                                            A
+                                            <FaUser className="text-lg" />
+                                            User
                                         </button>
                                     </Link>
                                 </li>
@@ -146,15 +145,15 @@ const AdminSidebar = () => {
                                     class="hs-accordion"
                                     id="projects-accordion"
                                 >
-                                    <Link to="/user/dashboard/medical-history/">
+                                    <Link to="/admin/doctor">
                                         <button
                                             type="button"
                                             class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
                                             aria-expanded="true"
                                             aria-controls="projects-accordion-child"
                                         >
-                                            <FaLaptopMedical className="text-lg" />
-                                            B
+                                            <FaUserDoctor className="text-lg" />
+                                            Doctor
                                         </button>
                                     </Link>
                                 </li>
@@ -162,7 +161,7 @@ const AdminSidebar = () => {
                                     class="hs-accordion"
                                     id="projects-accordion"
                                 >
-                                    <Link to="/user/dashboard/Consultation-history/">
+                                    <Link to="/admin/post">
                                         <button
                                             type="button"
                                             class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
@@ -170,7 +169,7 @@ const AdminSidebar = () => {
                                             aria-controls="projects-accordion-child"
                                         >
                                             <MdManageHistory className="text-lg" />
-                                            C
+                                            Post
                                         </button>
                                     </Link>
                                 </li>
