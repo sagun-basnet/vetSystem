@@ -4,7 +4,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
 import { AiOutlineMessage } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
-import { AuthContext } from "../../Context/authContext";
+import { AuthContext } from "../../../Context/authContext";
 
 const Topbar = () => {
     const { currentUser } = useContext(AuthContext);
