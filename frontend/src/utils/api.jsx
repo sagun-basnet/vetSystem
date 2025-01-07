@@ -4,7 +4,7 @@ import axios from "axios";
 // console.log("API Base URL:", process.env.REACT_APP_HOST);
 
 const api = axios.create({
-    baseURL: `http://${import.meta.env.VITE_HOST || '192.168.18.4:5050'}`, // Ensure REACT_APP_HOST is defined in .env
+    baseURL: `http://${import.meta.env.VITE_HOST || 'localhost:5050'}`, // Ensure REACT_APP_HOST is defined in .env
     withCredentials: true, // For cookies/auth
     headers: {
         "Content-Type": "application/json", // Ensures proper JSON communication
