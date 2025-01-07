@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const User = () => {
@@ -22,7 +22,9 @@ const User = () => {
                     All User
                 </h1>
                 <button className="bg-[#437EF7] py-2 px-6 rounded-md text-white">
+                    <Link to={`/admin/adduser`}>
                     Add User
+                    </Link>
                 </button>
             </div>
             <div className="overflow-x-auto my-6">
