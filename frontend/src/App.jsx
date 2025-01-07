@@ -13,6 +13,7 @@ import Post from "./components/admin/post/Post";
 import UserAdd from "./components/admin/user/UserAdd";
 import DoctorAdd from "./components/admin/doctor/DoctorAdd";
 import UserUpdate from "./components/admin/user/UserUpdate";
+import PostAdd from "./components/admin/post/PostAdd";
 
 const App = () => {
     // User Layout with Navbar
@@ -83,6 +84,10 @@ const App = () => {
                 {
                     path: "post",
                     element: <Post />,
+                },
+                {
+                    path: "addpost",
+                    element: <PostAdd />,
                 },
             ],
         },
