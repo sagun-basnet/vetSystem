@@ -1,18 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { get } from "../../../utils/api";
+import axios from "axios";
 
+import Cookies from "js-cookie";
 
 const User = () => {
+    
     const navigate=useNavigate();
-    const data = [
-        { id: 1, name: "John Doe", age: 28, country: "USA" },
-        { id: 2, name: "Jane Smith", age: 32, country: "Canada" },
-        { id: 3, name: "Sam Brown", age: 45, country: "UK" },
-        { id: 4, name: "Lucy Green", age: 25, country: "Australia" },
-    ];
+    // const data = [
+    //     { id: 1, name: "John Doe", age: 28, country: "USA" },
+    //     { id: 2, name: "Jane Smith", age: 32, country: "Canada" },
+    //     { id: 3, name: "Sam Brown", age: 45, country: "UK" },
+    //     { id: 4, name: "Lucy Green", age: 25, country: "Australia" },
+    // ];
+    const [data, setData] = useState([]);
+    console.log(data);
+    
+    const fetchData = async () => {
+         const res = await get('/api/get-user', {});
+        //  setData(res);
+         setData(res);
+        // await axios
+        //     .get("http://localhost:5050/api/get-user")
+        //     .then((res) => {
+        //         setData(res.data);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     });
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
     const handleUpdate = (id) => {
         console.log(id)
-        // Navigate to the update page with user_id
         navigate(`/admin/updateuser/${id}`);
     };
     return (
@@ -38,16 +60,13 @@ const User = () => {
                                 Name
                             </th>
                             <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                                Age
+                                Address
                             </th>
                             <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                                Country
+                                Email
                             </th>
                             <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                                Country
-                            </th>
-                            <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                                Country
+                                Phone
                             </th>
                             <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
                                 Action
@@ -64,17 +83,15 @@ const User = () => {
                                     {row.name}
                                 </td>
                                 <td className="px-4 py-2 border-b text-sm text-gray-800">
-                                    {row.age}
+                                    {row.address}
                                 </td>
                                 <td className="px-4 py-2 border-b text-sm text-gray-800">
-                                    {row.country}
+                                    {row.email}
                                 </td>
                                 <td className="px-4 py-2 border-b text-sm text-gray-800">
-                                    {row.country}
+                                    {row.phone}
                                 </td>
-                                <td className="px-4 py-2 border-b text-sm text-gray-800">
-                                    {row.country}
-                                </td>
+                                
                                 <td className="px-4 py-2 border-b text-sm text-gray-800 flex gap-4">
                                     <button
                                         className="bg-[#437EF7] text-white px-6 py-2 rounded-md"
