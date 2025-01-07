@@ -13,6 +13,7 @@ import Post from "./components/admin/post/Post";
 import UserAdd from "./components/admin/user/UserAdd";
 import DoctorAdd from "./components/admin/doctor/DoctorAdd";
 import UserUpdate from "./components/admin/user/UserUpdate";
+import PostAdd from "./components/admin/post/PostAdd";
 
 const App = () => {
     // User Layout with Navbar
@@ -84,13 +85,17 @@ const App = () => {
                     path: "post",
                     element: <Post />,
                 },
+                {
+                    path: "addpost",
+                    element: <PostAdd />,
+                },
             ],
         },
     ]);
 
     return (
         <div className="flex justify-center min-h-screen">
-            <div className="App font-heading w-full max-w-[343px]  md:max-w-[704px] lg:max-w-[1240px] xl:max-w-[100%]">
+            <div className="App font-heading w-full max-w-[343px]  md:max-w-[704px] lg:max-w-[1240px] ">
                 <RouterProvider router={router} />
             </div>
         </div>

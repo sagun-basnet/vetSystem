@@ -10,7 +10,8 @@ import { FaLaptopMedical } from "react-icons/fa";
 import { MdManageHistory } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaBox, FaUser } from "react-icons/fa6";
-// import { FormInput } from "lucide-react";
+import { BsPostcard } from "react-icons/bs";
+
 
 const AdminSidebar = () => {
     const [activeSection, setActiveSection] = useState("");
@@ -168,7 +169,7 @@ const AdminSidebar = () => {
                                             aria-expanded="true"
                                             aria-controls="projects-accordion-child"
                                         >
-                                            <MdManageHistory className="text-lg" />
+                                            <BsPostcard className="text-lg" />
                                             Post
                                         </button>
                                     </Link>
