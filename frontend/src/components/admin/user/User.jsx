@@ -1,51 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { get } from "../../../utils/api";
-import axios from "axios";
-
-import Cookies from "js-cookie";
 
 const User = () => {
-    
-    const navigate=useNavigate();
-    // const data = [
-    //     { id: 1, name: "John Doe", age: 28, country: "USA" },
-    //     { id: 2, name: "Jane Smith", age: 32, country: "Canada" },
-    //     { id: 3, name: "Sam Brown", age: 45, country: "UK" },
-    //     { id: 4, name: "Lucy Green", age: 25, country: "Australia" },
-    // ];
+    const navigate = useNavigate();
     const [data, setData] = useState([]);
     console.log(data);
-    
+
     const fetchData = async () => {
-         const res = await get('/api/get-user', {});
-        //  setData(res);
-         setData(res);
-        // await axios
-        //     .get("http://localhost:5050/api/get-user")
-        //     .then((res) => {
-        //         setData(res.data);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
+        const res = await get('/api/get-user', {});
+        setData(res);
     };
+
     useEffect(() => {
         fetchData();
     }, []);
+
     const handleUpdate = (id) => {
-        console.log(id)
-        navigate(`/admin/updateuser/${id}`);
+        navigate(`/admin/updateuser/${id}`, {
+            state: { user_id: id }, // Passing the row details as state
+        });
     };
+
     return (
         <div className="flex-1 shadow-lg shadow-gray-300 rounded-md px-3 py-3">
             <div className="flex justify-between">
-                <h1 className="font-medium text-[30px] text-primary ">
+                <h1 className="font-medium text-[30px] text-primary">
                     All User
                 </h1>
                 <button className="bg-[#437EF7] py-2 px-6 rounded-md text-white">
                     <Link to={`/admin/adduser`}>
-                    Add User
+                        Add User
                     </Link>
                 </button>
             </div>
@@ -91,13 +76,10 @@ const User = () => {
                                 <td className="px-4 py-2 border-b text-sm text-gray-800">
                                     {row.phone}
                                 </td>
-                                
                                 <td className="px-4 py-2 border-b text-sm text-gray-800 flex gap-4">
                                     <button
                                         className="bg-[#437EF7] text-white px-6 py-2 rounded-md"
-                                        onClick={() =>
-                                            handleUpdate(row.id)
-                                        }
+                                        onClick={() => handleUpdate(row.id)} // Pass the row object
                                     >
                                         Update
                                     </button>

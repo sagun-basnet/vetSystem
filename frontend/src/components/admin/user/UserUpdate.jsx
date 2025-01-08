@@ -1,27 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { post,get } from "../../../utils/api";
 
 const UserUpdate = () => {
-    // const params=useParams();
-    const { id } = useParams();
-    // console.log(params)
+    const location = useLocation();
+    const navigate=useNavigate();
+    const { user_id } = location?.state || {};
+    console.log(user_id);
+
 
     const [data, setData] = useState({
         name: "",
         email: "",
-        password: "",
         phone: "",
         address: "",
-        hobby: "",
     });
     console.log(data);
+    
     const fetchData = async () => {
-       
-    };
+            const res = await get(`/api/get-single-user/${user_id}`, {});
+            setData(res.result[0]);
+        };
 
     useEffect(() => {
         fetchData();
-    }, [id]);
+    }, [user_id]);
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -29,9 +32,11 @@ const UserUpdate = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+        const res = await post(`/api//update-user/${user_id}`, data);
+        console.log(res)
+        navigate('/admin/user')
     };
-
+  
     return (
         <div className="flex items-center justify-center h-[100vh] bg-[#f3f3f3]">
             <div className="max-w-[343px] md:max-w-[550px] w-full flex flex-col gap-5 bg-white px-4 md:px-8 py-6 md:py-8 rounded-md shadow-sm shadow-slate-300">
@@ -62,19 +67,7 @@ const UserUpdate = () => {
                         className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
                     />
                 </div>
-                <div className="flex flex-col w-full gap-2">
-                    <label className="font-medium text-[14px] leading-[20px] tracking-[-0.28px]">
-                        Password
-                    </label>
-                    <input
-                        name="password"
-                        id="password"
-                        onChange={handleChange}
-                        type="password"
-                        value={data.password}
-                        className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
-                    />
-                </div>
+
                 <div className="flex flex-col w-full gap-2">
                     <label className="font-medium text-[14px] leading-[20px] tracking-[-0.28px]">
                         Phone
@@ -101,31 +94,18 @@ const UserUpdate = () => {
                         className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
                     />
                 </div>
-                <div className="flex flex-col w-full gap-2">
-                    <label className="font-medium text-[14px] leading-[20px] tracking-[-0.28px]">
-                        Hobby
-                    </label>
-                    <input
-                        name="hobby"
-                        id="hobby"
-                        onChange={handleChange}
-                        type="text"
-                        value={data.hobby}
-                        className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
-                    />
-                </div>
 
                 <button
                     onClick={handleSubmit}
-                    className="bg-[#437EF7] text-white py-3 rounded-sm font-semibold tracking-[0.48px] "
+                    className="bg-primary text-white py-3 rounded-sm font-semibold tracking-[0.48px] "
                 >
                     Update User
                 </button>
                 <button
                     type="submit"
-                    className="text-[#437EF7] font-semibold py-3 rounded-sm border-2 border-[#437EF7]"
+                    className="text-primary font-semibold py-3 rounded-sm border-2 border-primary"
                 >
-                    <Link to={"/"}>Cancel</Link>
+                    <Link to={"/admin/user"}>Cancel</Link>
                 </button>
             </div>
         </div>
