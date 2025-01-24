@@ -39,7 +39,7 @@ export const register = (req, res) => {
                         const sql = "UPDATE users SET otp=? WHERE email=?";
                         db.query(sql, [otp, email], (err, data) => {
                             if (err) {
-                                next(errorHandler(500, err));
+                                res.status(500).send(err);
                             } else {
                                 res.status(200).send({
                                     success: true,
@@ -49,7 +49,7 @@ export const register = (req, res) => {
                         });
                     })
                     .catch((err) => {
-                        errorHandler(500, err);
+                        res.status(500).send(err);
                     });
                 // res.status(201).json({ message: "User created successfully.", result });
             }
@@ -82,5 +82,38 @@ export const login = (req, res) => {
         })
             .status(200)
             .json({ others, token });
+    });
+};
+
+export const verifyOtp = (req, res) => {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+      res.status(400).send("OTP is required");
+        
+    }
+
+    const sql = "SELECT * FROM users WHERE email = ? AND otp = ?";
+
+    db.query(sql, [email, otp], (err, result) => {
+        if (err) {
+          res.status(400).send(err);
+        }
+
+        if (result.length > 0) {
+            const updateSql = "UPDATE users SET isVerified = 1 WHERE email = ?";
+            db.query(updateSql, [email], (err, updateResult) => {
+                if (err) {
+                  res.status(500).send( "Failed to update verification status");                    
+                }
+                res.send({
+                    message: "Email verified successfully",
+                    data: updateResult,
+                    success: true,
+                });
+            });
+        } else {
+          res.status(400).send("OTP is invalid!!");
+        }
     });
 };
