@@ -41,3 +41,10 @@ export const updateUser = (req, res) => {
     }
   );
 };
+export const getDoctors = (req, res) => {
+  const q = "select * from `users` where `role_id` = 2";
+  db.query(q, (err, result) => {
+    if (err) return res.status(500).json(err);
+    res.status(200).json(result);
+  });
+};
