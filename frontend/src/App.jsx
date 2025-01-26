@@ -14,6 +14,7 @@ import UserAdd from "./components/admin/user/UserAdd";
 import DoctorAdd from "./components/admin/doctor/DoctorAdd";
 import UserUpdate from "./components/admin/user/UserUpdate";
 import PostAdd from "./components/admin/post/PostAdd";
+import AuthOTP from "./pages/AuthOTP";
 
 const App = () => {
     // User Layout with Navbar
@@ -52,6 +53,10 @@ const App = () => {
         {
             path: "/signup",
             element: <SignupPage />,
+        },
+        {
+            path: "/verify-otp",
+            element: <AuthOTP />,
         },
         {
             path: "/admin",
