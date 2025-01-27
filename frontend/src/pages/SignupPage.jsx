@@ -31,7 +31,10 @@ const SignupPage = () => {
         console.log(res);
 
         alert(`Registration successful! Email: ${formData}`);
-        navigate('/')
+        // navigate('/')
+        navigate("/verify-otp", {
+            state: { email: formData.email },
+        });
     };
 
     const handleChange = (e) => {
