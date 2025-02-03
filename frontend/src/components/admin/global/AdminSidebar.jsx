@@ -178,7 +178,7 @@ const AdminSidebar = () => {
                                     class="hs-accordion"
                                     id="projects-accordion"
                                 >
-                                    <Link to="/user/dashboard/qrcode/">
+                                    <Link to="/admin/appointment">
                                         <button
                                             type="button"
                                             class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
@@ -186,7 +186,7 @@ const AdminSidebar = () => {
                                             aria-controls="projects-accordion-child"
                                         >
                                             <FaQrcode className="text-lg" />
-                                            D
+                                            Appointment
                                         </button>
                                     </Link>
                                 </li>

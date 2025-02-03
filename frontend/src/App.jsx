@@ -15,6 +15,8 @@ import DoctorAdd from "./components/admin/doctor/DoctorAdd";
 import UserUpdate from "./components/admin/user/UserUpdate";
 import PostAdd from "./components/admin/post/PostAdd";
 import AuthOTP from "./pages/AuthOTP";
+import DoctorUpdate from "./components/admin/doctor/DoctorUpdate";
+import Appointment from "./components/admin/appointment/Appointment";
 
 const App = () => {
     // User Layout with Navbar
@@ -79,6 +81,10 @@ const App = () => {
                     element: <UserUpdate />,
                 },
                 {
+                    path: "updatedoctor/:id",
+                    element: <DoctorUpdate />,
+                },
+                {
                     path: "doctor",
                     element: <Doctor />,
                 },
@@ -94,6 +100,11 @@ const App = () => {
                     path: "addpost",
                     element: <PostAdd />,
                 },
+                {
+                    path: "appointment",
+                    element: <Appointment />,
+                },
+                
             ],
         },
     ]);
