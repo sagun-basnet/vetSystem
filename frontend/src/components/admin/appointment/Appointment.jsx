@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { get } from "../../../utils/api";
+import { AuthContext } from "../../../context/authContext";
 
 const Appointment = () => {
+    const {currentUser}= useContext(AuthContext)
     const navigate = useNavigate();
     const [data, setData] = useState([]);
-    //     console.log(data);
+        console.log(data);
+        console.log(currentUser.id);
 
     const fetchData = async () => {
-        const res = await get("/api/get-appointment", {});
+        const res = await get(`/api/getAppointmentByUser/${currentUser.id}`, {});
         setData(res);
     };
 
@@ -32,7 +35,7 @@ const Appointment = () => {
                         <thead>
                             <tr className="bg-gray-100">
                                 <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                                    ID
+                                    SN
                                 </th>
                                 <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
                                     Service
@@ -41,7 +44,7 @@ const Appointment = () => {
                                     Date
                                 </th>
                                 <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                                    User Id
+                                    Doctor Name
                                 </th>
 
                                 <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
@@ -50,10 +53,10 @@ const Appointment = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((row) => (
-                                <tr key={row.id} className="hover:bg-gray-50">
+                            {data.map((row,index) => (
+                                <tr key={index} className="hover:bg-gray-50">
                                     <td className="px-4 py-2 border-b text-sm text-gray-800">
-                                        {row.id}
+                                        {index+1}
                                     </td>
                                     <td className="px-4 py-2 border-b text-sm text-gray-800">
                                         {row.service}
@@ -62,7 +65,7 @@ const Appointment = () => {
                                         {row.date}
                                     </td>
                                     <td className="px-4 py-2 border-b text-sm text-gray-800">
-                                        {row.user_id}
+                                        {row.doctor_name}
                                     </td>
 
                                     <td className="px-4 py-2 border-b text-sm text-gray-800 flex gap-4">
