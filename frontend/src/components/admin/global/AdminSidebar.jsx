@@ -267,7 +267,7 @@ const AdminSidebar = () => {
                     {/* <!-- End Content --> */}
                 </div>
             </div>
-            {/* <!-- End Sidebar --> */}
+            
         </>
     );
 };
