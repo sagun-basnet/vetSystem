@@ -34,7 +34,7 @@ const AppointmentAdd = () => {
         e.preventDefault();
         const res=post('/api/book-appointment',formData);
         console.log(res);
-        alert('Appointment added successfully');
+        // alert('Appointment added successfully');
 
     };
     
