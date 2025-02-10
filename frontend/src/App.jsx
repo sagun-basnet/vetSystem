@@ -113,16 +113,16 @@ const App = () => {
             element: <AdminLayout />,
             children: [
                 {
-                    path: "appointment",
+                    path: "",
+                    element: <UserProfile />,
+                },
+                {
+                    path: "userappointment",
                     element: <Appointment />,
                 },
                 {
                     path: "addappointment",
                     element: <AppointmentAdd />,
-                },
-                {
-                    path: "userprofile",
-                    element: <UserProfile />,
                 },
             ],
         },

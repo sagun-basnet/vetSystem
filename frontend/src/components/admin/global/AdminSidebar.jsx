@@ -212,7 +212,7 @@ const AdminSidebar = () => {
                                         class="hs-accordion"
                                         id="users-accordion"
                                     >
-                                        <Link to="/user/userprofile">
+                                        <Link to="/user">
                                             <button
                                                 type="button"
                                                 class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
@@ -223,15 +223,13 @@ const AdminSidebar = () => {
                                                 User Profile
                                             </button>
                                         </Link>
-                                    </li>
-
-                                    
+                                    </li>                                  
                                    
                                     <li
                                         class="hs-accordion"
                                         id="projects-accordion"
                                     >
-                                        <Link to="/user/appointment">
+                                        <Link to="/user/userappointment">
                                             <button
                                                 type="button"
                                                 class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
