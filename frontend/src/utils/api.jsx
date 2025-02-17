@@ -14,7 +14,7 @@ const api = axios.create({
 
 // Utility function to retrieve the access token from cookies using js-cookie
 const getAuthTokenFromCookies = () => {
-    const token=Cookies.get("accessToken")
+    const token = Cookies.get("accessToken")
     return token // Retrieve token directly using js-cookie
 };
 
@@ -23,7 +23,7 @@ export const get = async (endpoint, params = {}) => {
     try {
         const token = getAuthTokenFromCookies(); // Get the token from cookies
         console.log(token, "token");
-        
+
         const headers = token ? { "Authorization": `Bearer ${token}` } : {};
 
         const response = await api.get(endpoint, { params, headers });
