@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { get } from "../../../utils/api";
 import { AuthContext } from "../../../context/authContext";
 
@@ -25,9 +25,11 @@ const Appointment = () => {
                 <h1 className="font-medium text-[30px] text-primary ">
                     All Post
                 </h1>
+                <Link to={'/user/addappointment'}>
                 <button className="bg-[#437EF7] py-2 px-6 rounded-md text-white">
-                    Add Post
+                    Add Appointment
                 </button>
+                </Link>
             </div>
             {data.length > 0 ? (
                 <div className="overflow-x-auto my-6">

@@ -28,18 +28,22 @@ export const getAppointment = (req, res) => {
     });
 };
 export const getAppointmentByUser = (req, res) => {
-  const id = parseInt(req.params.id);  // user_id from the request parameter
+    const id = parseInt(req.params.id); // user_id from the request parameter
 
-  // Corrected SQL query with proper MySQL comments
-  const q = `SELECT * from appointment where user_id = ?;`; 
-  
-  db.query(q, [id], (err, result) => {
-    if (err) return res.status(500).json(err);
-    res.status(200).json(result);  // Return the result of the query
-  });
+    // Corrected SQL query with proper MySQL comments
+    const q = `SELECT a.*,
+       u.name AS user_name, d.name AS doctor_name
+FROM appointment a
+JOIN users u ON a.user_id = u.id
+JOIN users d ON a.doctor_id = d.id 
+WHERE a.user_id = ?;
+`;
+
+    db.query(q, [id], (err, result) => {
+        if (err) return res.status(500).json(err);
+        res.status(200).json(result); // Return the result of the query
+    });
 };
-
-
 
 export const cancelAppointment = (req, res) => {
     const id = req.params.id;
