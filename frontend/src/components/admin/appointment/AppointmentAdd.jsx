@@ -32,7 +32,7 @@ const AppointmentAdd = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res=post('/api/book-appointment',formData);
+        const res=  await post('/api/book-appointment',formData);
         console.log(res);
         // alert('Appointment added successfully');
 

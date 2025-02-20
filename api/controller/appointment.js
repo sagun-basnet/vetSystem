@@ -7,7 +7,7 @@ export const bookAppointment = (req, res) => {
     db.query(q, [date, doctorId], (err, results) => {
         if (err) return res.status(500).json(err);
         if (results.length)
-            return res.status(409).json("Appointment already exists.");
+            return res.status(200).json("Appointment already exists.");
         const q =
             "insert into appointment (date, service, user_id, doctor_id) values(?, ?, ?, ?)";
         db.query(q, [date, service, user_id, doctorId], (err, result) => {
