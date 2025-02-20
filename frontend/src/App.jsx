@@ -14,6 +14,11 @@ import UserAdd from "./components/admin/user/UserAdd";
 import DoctorAdd from "./components/admin/doctor/DoctorAdd";
 import UserUpdate from "./components/admin/user/UserUpdate";
 import PostAdd from "./components/admin/post/PostAdd";
+import AuthOTP from "./pages/AuthOTP";
+import DoctorUpdate from "./components/admin/doctor/DoctorUpdate";
+import Appointment from "./components/admin/appointment/Appointment";
+import UserProfile from "./components/admin/user/UserProfile";
+import AppointmentAdd from "./components/admin/appointment/AppointmentAdd";
 
 const App = () => {
     // User Layout with Navbar
@@ -54,6 +59,10 @@ const App = () => {
             element: <SignupPage />,
         },
         {
+            path: "/verify-otp",
+            element: <AuthOTP />,
+        },
+        {
             path: "/admin",
             element: <AdminLayout />,
             children: [
@@ -74,6 +83,10 @@ const App = () => {
                     element: <UserUpdate />,
                 },
                 {
+                    path: "updatedoctor/:id",
+                    element: <DoctorUpdate />,
+                },
+                {
                     path: "doctor",
                     element: <Doctor />,
                 },
@@ -88,6 +101,28 @@ const App = () => {
                 {
                     path: "addpost",
                     element: <PostAdd />,
+                },
+                {
+                    path: "appointment",
+                    element: <Appointment />,
+                },
+            ],
+        },
+        {
+            path: "/user",
+            element: <AdminLayout />,
+            children: [
+                {
+                    path: "",
+                    element: <UserProfile />,
+                },
+                {
+                    path: "userappointment",
+                    element: <Appointment />,
+                },
+                {
+                    path: "addappointment",
+                    element: <AppointmentAdd />,
                 },
             ],
         },

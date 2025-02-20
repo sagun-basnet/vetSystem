@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { post } from "../utils/api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
     const navigate = useNavigate();
@@ -31,7 +31,10 @@ const SignupPage = () => {
         console.log(res);
 
         alert(`Registration successful! Email: ${formData}`);
-        navigate('/')
+        // navigate('/')
+        navigate("/verify-otp", {
+            state: { email: formData.email },
+        });
     };
 
     const handleChange = (e) => {
@@ -160,7 +163,6 @@ const SignupPage = () => {
 
                     {/* Gender Selection */}
 
-
                     <button
                         type="submit"
                         className="w-full bg-primary border-2 border-primary text-[15px] text-white py-3 rounded-sm font-semibold transition-all duration-500 ease-in-out hover:bg-white hover:text-primary"
@@ -170,7 +172,9 @@ const SignupPage = () => {
                 </form>
                 <div className="flex gap-3 text-primary items-center justify-between">
                     <span className="text-sm">Already have an account?</span>
-                    <span className="font-semibold text-sm">Sign In</span>
+                    <Link to="/login">
+                        <span className="font-semibold text-sm">Sign In</span>
+                    </Link>
                 </div>
             </div>
         </div>
