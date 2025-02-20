@@ -105,7 +105,7 @@ const AdminSidebar = () => {
                             class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
                             // href="/admin"
                         >
-                            <h2 className="text-white">Vet System</h2>
+                            <h2 className="text-white">AgroHealth&Services</h2>
                         </a>
                         {/* <!-- End Logo --> */}
                     </div>
