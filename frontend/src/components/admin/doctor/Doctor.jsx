@@ -1,13 +1,25 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { get } from "../../../utils/api";
 
 const Doctor = () => {
-    const data = [
-        { id: 1, name: "John Doe", age: 28, country: "USA" },
-        { id: 2, name: "Jane Smith", age: 32, country: "Canada" },
-        { id: 3, name: "Sam Brown", age: 45, country: "UK" },
-        { id: 4, name: "Lucy Green", age: 25, country: "Australia" },
-    ];
+    const navigate = useNavigate();
+    const [data, setData] = useState([]);
+    console.log(data);
+
+    const fetchData = async () => {
+        const res = await get("/api/get-doctors", {});
+        setData(res);
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+    const handleUpdate = (id) => {
+        navigate(`/admin/updatedoctor/${id}`, {
+            state: { user_id: id }, // Passing the row details as state
+        });
+    };
     return (
         <div className="flex-1 shadow-lg shadow-gray-300 rounded-md px-3 py-3">
             <div className="flex justify-between">
@@ -15,9 +27,7 @@ const Doctor = () => {
                     All Doctor
                 </h1>
                 <button className="bg-[#437EF7] py-2 px-6 rounded-md text-white">
-                <Link to={'/admin/adddoctor'}>
-                    Add Doctor
-                </Link>
+                    <Link to={"/admin/adddoctor"}>Add Doctor</Link>
                 </button>
             </div>
             <div className="overflow-x-auto my-6">
@@ -31,16 +41,13 @@ const Doctor = () => {
                                 Name
                             </th>
                             <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                                Age
+                                Address
                             </th>
                             <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                                Country
+                                Email
                             </th>
                             <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                                Country
-                            </th>
-                            <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                                Country
+                                Phone
                             </th>
                             <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
                                 Action
@@ -57,19 +64,19 @@ const Doctor = () => {
                                     {row.name}
                                 </td>
                                 <td className="px-4 py-2 border-b text-sm text-gray-800">
-                                    {row.age}
+                                    {row.address}
                                 </td>
                                 <td className="px-4 py-2 border-b text-sm text-gray-800">
-                                    {row.country}
+                                    {row.email}
                                 </td>
                                 <td className="px-4 py-2 border-b text-sm text-gray-800">
-                                    {row.country}
-                                </td>
-                                <td className="px-4 py-2 border-b text-sm text-gray-800">
-                                    {row.country}
+                                    {row.phone}
                                 </td>
                                 <td className="px-4 py-2 border-b text-sm text-gray-800 flex gap-4">
-                                    <button className="bg-[#437EF7] text-white px-6 py-2 rounded-md">
+                                    <button
+                                        className="bg-[#437EF7] text-white px-6 py-2 rounded-md"
+                                        onClick={() => handleUpdate(row.id)} // Pass the row object
+                                    >
                                         Update
                                     </button>
                                     <button className="bg-red-500 text-white px-6 py-2 rounded-md">

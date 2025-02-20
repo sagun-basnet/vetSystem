@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 // import "./style.css";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { MdOutlineDashboard } from "react-icons/md";
@@ -11,9 +11,11 @@ import { MdManageHistory } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaBox, FaUser } from "react-icons/fa6";
 import { BsPostcard } from "react-icons/bs";
-
+import { AuthContext } from "../../../context/authContext";
 
 const AdminSidebar = () => {
+    const { currentUser } = useContext(AuthContext);
+    console.log(currentUser.role_id);
     const [activeSection, setActiveSection] = useState("");
     const [showCategories, setShowCategories] = useState(false); // To toggle categories
 
@@ -114,95 +116,156 @@ const AdminSidebar = () => {
                             class="hs-accordion-group p-3 w-full flex flex-col flex-wrap"
                             data-hs-accordion-always-open
                         >
-                            <ul class="flex flex-col space-y-1">
-                                <li class="hs-accordion" id="users-accordion">
-                                    <Link to="/admin">
-                                        <button
-                                            type="button"
-                                            class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                            aria-expanded="true"
-                                            aria-controls="users-accordion-child"
-                                        >
-                                            <MdOutlineDashboard className="text-lg" />
-                                            Dashboard
-                                        </button>
-                                    </Link>
-                                </li>
-                                <li class="hs-accordion" id="users-accordion">
-                                    <Link to="/admin/user">
-                                        <button
-                                            type="button"
-                                            class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                            aria-expanded="true"
-                                            aria-controls="users-accordion-child"
-                                        >
-                                            <FaUser className="text-lg" />
-                                            User
-                                        </button>
-                                    </Link>
-                                </li>
+                            {currentUser.role_id == 1 && (
+                                <ul class="flex flex-col space-y-1">
+                                    <li
+                                        class="hs-accordion"
+                                        id="users-accordion"
+                                    >
+                                        <Link to="/admin">
+                                            <button
+                                                type="button"
+                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                aria-expanded="true"
+                                                aria-controls="users-accordion-child"
+                                            >
+                                                <MdOutlineDashboard className="text-lg" />
+                                                Dashboard
+                                            </button>
+                                        </Link>
+                                    </li>
+                                    <li
+                                        class="hs-accordion"
+                                        id="users-accordion"
+                                    >
+                                        <Link to="/admin/user">
+                                            <button
+                                                type="button"
+                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                aria-expanded="true"
+                                                aria-controls="users-accordion-child"
+                                            >
+                                                <FaUser className="text-lg" />
+                                                User
+                                            </button>
+                                        </Link>
+                                    </li>
 
-                                <li
-                                    class="hs-accordion"
-                                    id="projects-accordion"
-                                >
-                                    <Link to="/admin/doctor">
-                                        <button
-                                            type="button"
-                                            class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                            aria-expanded="true"
-                                            aria-controls="projects-accordion-child"
-                                        >
-                                            <FaUserDoctor className="text-lg" />
-                                            Doctor
-                                        </button>
-                                    </Link>
-                                </li>
-                                <li
-                                    class="hs-accordion"
-                                    id="projects-accordion"
-                                >
-                                    <Link to="/admin/post">
-                                        <button
-                                            type="button"
-                                            class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                            aria-expanded="true"
-                                            aria-controls="projects-accordion-child"
-                                        >
-                                            <BsPostcard className="text-lg" />
-                                            Post
-                                        </button>
-                                    </Link>
-                                </li>
-                                <li
-                                    class="hs-accordion"
-                                    id="projects-accordion"
-                                >
-                                    <Link to="/user/dashboard/qrcode/">
-                                        <button
-                                            type="button"
-                                            class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                            aria-expanded="true"
-                                            aria-controls="projects-accordion-child"
-                                        >
-                                            <FaQrcode className="text-lg" />
-                                            D
-                                        </button>
-                                    </Link>
-                                </li>
-                                <li
-                                    class="hs-accordion"
-                                    id="projects-accordion"
-                                >
+                                    <li
+                                        class="hs-accordion"
+                                        id="projects-accordion"
+                                    >
+                                        <Link to="/admin/doctor">
+                                            <button
+                                                type="button"
+                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                aria-expanded="true"
+                                                aria-controls="projects-accordion-child"
+                                            >
+                                                <FaUserDoctor className="text-lg" />
+                                                Doctor
+                                            </button>
+                                        </Link>
+                                    </li>
+                                    <li
+                                        class="hs-accordion"
+                                        id="projects-accordion"
+                                    >
+                                        <Link to="/admin/post">
+                                            <button
+                                                type="button"
+                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                aria-expanded="true"
+                                                aria-controls="projects-accordion-child"
+                                            >
+                                                <BsPostcard className="text-lg" />
+                                                Post
+                                            </button>
+                                        </Link>
+                                    </li>
+                                    <li
+                                        class="hs-accordion"
+                                        id="projects-accordion"
+                                    >
+                                        <Link to="/admin/appointment">
+                                            <button
+                                                type="button"
+                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                aria-expanded="true"
+                                                aria-controls="projects-accordion-child"
+                                            >
+                                                <FaQrcode className="text-lg" />
+                                                Appointment
+                                            </button>
+                                        </Link>
+                                    </li>
+                                    <li
+                                        class="hs-accordion"
+                                        id="projects-accordion"
+                                    ></li>
+                                </ul>
+                            )}
+                            {currentUser.role_id == 3 && (
+                                <ul class="flex flex-col space-y-1">
                                     
-                                </li>
-                            </ul>
+                                    <li
+                                        class="hs-accordion"
+                                        id="users-accordion"
+                                    >
+                                        <Link to="/user">
+                                            <button
+                                                type="button"
+                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                aria-expanded="true"
+                                                aria-controls="users-accordion-child"
+                                            >
+                                                <FaUser className="text-lg" />
+                                                User Profile
+                                            </button>
+                                        </Link>
+                                    </li>                                  
+                                   
+                                    <li
+                                        class="hs-accordion"
+                                        id="projects-accordion"
+                                    >
+                                        <Link to="/user/userappointment">
+                                            <button
+                                                type="button"
+                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                aria-expanded="true"
+                                                aria-controls="projects-accordion-child"
+                                            >
+                                                <FaQrcode className="text-lg" />
+                                                My Appointment
+                                            </button>
+                                        </Link>
+                                    </li>
+                                    <li
+                                        class="hs-accordion"
+                                        id="projects-accordion"
+                                    >
+                                        <Link to="/user/addappointment">
+                                            <button
+                                                type="button"
+                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                aria-expanded="true"
+                                                aria-controls="projects-accordion-child"
+                                            >
+                                                <FaQrcode className="text-lg" />
+                                                Add Appointment
+                                            </button>
+                                        </Link>
+                                    </li>
+                                    
+                                </ul>
+                            )}
                         </nav>
                     </div>
                     {/* <!-- End Content --> */}
                 </div>
             </div>
-            {/* <!-- End Sidebar --> */}
+            
         </>
     );
 };

@@ -1,5 +1,6 @@
 import { db } from "../db/db.js";
 import bcrypt from "bcryptjs";
+
 export const getUser = (req, res) => {
   const q = "select * from `users` where `role_id` = 3";
   db.query(q, (err, result) => {
