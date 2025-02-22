@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/authContext";
 import { get, post } from "../../../utils/api";
+import { toast } from "react-toastify";
 
 const AppointmentAdd = () => {
     const { currentUser } = useContext(AuthContext);
     const [formData, setFormData] = useState({
         date: "",
         service: "",
-        doctor_id: "", 
+        doctor_id: "",
         user_id: currentUser.id,
     });
     console.log(formData);
@@ -18,26 +19,26 @@ const AppointmentAdd = () => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    
     const [doctor, setDoctor] = useState([]);
-    
+
     const fetchDoctor = async () => {
         const res = await get("/api/get-doctors", {});
-        setDoctor(res); // assume res contains an array of doctor objects
+        setDoctor(res);
     };
-    
+
     useEffect(() => {
         fetchDoctor();
     }, []);
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res=post('/api/book-appointment',formData);
-        console.log(res);
-        // alert('Appointment added successfully');
-
+        const res = await post("/api/book-appointment", formData);
+        if (res.success == 1) {
+            toast.success(res.message);
+        } else {
+            toast.error(res.message);
+        }
     };
-    
 
     return (
         <div>
@@ -78,16 +79,18 @@ const AppointmentAdd = () => {
                             Doctor
                         </label>
                         <select
-                            name="doctor_id" 
+                            name="doctor_id"
                             id="doctor"
                             onChange={handleChange}
-                            value={formData.doctor_id} 
+                            value={formData.doctor_id}
                             className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
                         >
-                            <option value="">Choose Doctor</option> {/* Default option */}
+                            <option value="">Choose Doctor</option>{" "}
+                            {/* Default option */}
                             {doctor.map((doc) => (
                                 <option key={doc.id} value={doc.id}>
-                                    {doc.name} {/* Assuming doc has an id and name */}
+                                    {doc.name}{" "}
+                                    {/* Assuming doc has an id and name */}
                                 </option>
                             ))}
                         </select>

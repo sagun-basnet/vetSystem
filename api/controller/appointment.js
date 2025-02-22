@@ -48,14 +48,13 @@ WHERE a.user_id = ?;
 export const getAppointmentByDoctor = (req, res) => {
   const id = parseInt(req.params.id);
   const q = `SELECT appointment.*, users.*
-FROM appointment
-INNER JOIN users ON appointment.user_id = users.id where appointment.doctor_id = ?;`;
+  FROM appointment
+  INNER JOIN users ON appointment.user_id = users.id where appointment.doctor_id = ?;`;
   db.query(q, [id], (err, result) => {
     if (err) return res.status(500).json(err);
     res.status(200).json(result);
   });
 };
-
 export const cancelAppointment = (req, res) => {
   const id = req.params.id;
   const q = "delete from appointment where id = ?";
