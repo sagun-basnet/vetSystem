@@ -57,6 +57,34 @@ export const register = (req, res) => {
     });
 };
 
+
+export const registerDoctor = (req, res) => {
+    const { name, address, phone, email } = req.body;
+    
+    const q = "select * from `users` where `email` = ?";
+    const generateOTP = () => Math.floor(1000 + Math.random() * 9000);
+    const otp = generateOTP();
+
+    db.query(q, [email], (err, data) => {
+        if (err) return res.status(500).json(err);
+        if (data.length) return res.status(201).json({message:"Doctor already exists.",success: 0});
+
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync("doctor@123", salt);
+        const q =
+            "insert into users (`name`, `address`, `phone`, `email`, `password`, `role_id`,`isVerified`) value(?,?,?,?,?,?,?)";
+        db.query(
+            q,
+            [name, address, phone, email, hashedPassword, 2,1],
+            (err, result) => {
+                if (err) return res.status(500).json(err);
+                res.status(200).json({message:"Doctor added successfully.",success:1});
+            }
+        );
+    });
+};
+
+
 export const login = (req, res) => {
     const q = "select * from `users` where `email` = ?";
     db.query(q, [req.body.email], (err, data) => {

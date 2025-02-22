@@ -24,7 +24,7 @@ const Navbar = () => {
                                     <li>Home</li>
                                 </Link>
 
-                                <li>Our Products</li>
+                                <li>Post</li>
                                 <li className="flex gap-[8px] items-center">
                                     <span>Resources</span>
                                 </li>
