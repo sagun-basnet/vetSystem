@@ -19,6 +19,8 @@ import DoctorUpdate from "./components/admin/doctor/DoctorUpdate";
 import Appointment from "./components/admin/appointment/Appointment";
 import UserProfile from "./components/admin/user/UserProfile";
 import AppointmentAdd from "./components/admin/appointment/AppointmentAdd";
+import AppointmentDoctor from "./components/admin/appointment/AppointmentDoctor";
+import Footer from "./components/global/Footer";
 
 const App = () => {
     // User Layout with Navbar
@@ -27,6 +29,7 @@ const App = () => {
             <>
                 <Navbar />
                 <Outlet />
+                <Footer/>
             </>
         );
     };
@@ -124,6 +127,21 @@ const App = () => {
                     path: "addappointment",
                     element: <AppointmentAdd />,
                 },
+            ],
+        },
+        {
+            path: "/doctor",
+            element: <AdminLayout />,
+            children: [
+                {
+                    path: "",
+                    element: <UserProfile />,
+                },
+                {
+                    path: "allappointment",
+                    element: <AppointmentDoctor />,
+                },
+                
             ],
         },
     ]);

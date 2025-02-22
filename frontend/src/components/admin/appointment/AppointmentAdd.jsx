@@ -86,11 +86,9 @@ const AppointmentAdd = () => {
                             className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
                         >
                             <option value="">Choose Doctor</option>{" "}
-                            {/* Default option */}
                             {doctor.map((doc) => (
                                 <option key={doc.id} value={doc.id}>
                                     {doc.name}{" "}
-                                    {/* Assuming doc has an id and name */}
                                 </option>
                             ))}
                         </select>

@@ -4,7 +4,7 @@ import { get } from "../../../utils/api";
 import { AuthContext } from "../../../context/authContext";
 import { toast } from "react-toastify";
 
-const Appointment = () => {
+const AppointmentDoctor = () => {
     const { currentUser } = useContext(AuthContext);
     const navigate = useNavigate();
     const [data, setData] = useState([]);
@@ -13,7 +13,7 @@ const Appointment = () => {
 
     const fetchData = async () => {
         const res = await get(
-            `/api/getAppointmentByUser/${currentUser.id}`,
+            `/api/getAppointmentByDoctor/${currentUser.id}`,
             {}
         );
         setData(res);
@@ -57,13 +57,10 @@ const Appointment = () => {
                                 <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
                                     Date
                                 </th>
-                                <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                                    Doctor Name
-                                </th>
+
                                 <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
                                     Status
                                 </th>
-
                                 <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
                                     Action
                                 </th>
@@ -81,22 +78,23 @@ const Appointment = () => {
                                     <td className="px-4 py-2 border-b text-sm text-gray-800">
                                         {row.date}
                                     </td>
-                                    <td className="px-4 py-2 border-b text-sm text-gray-800">
-                                        {row.doctor_name}
-                                    </td>
-                                    <td className="px-4 py-2 border-b text-sm text-gray-800">
+                                    <td
+                                        className={`px-4 py-2 border-b text-sm text-gray-800 ${
+                                            row.status === "pending"
+                                                ? "text-green-500"
+                                                : "text-blue-500"
+                                        }`}
+                                    >
                                         {row.status}
                                     </td>
-
                                     <td className="px-4 py-2 border-b text-sm text-gray-800 flex gap-4">
-                                        <button className="bg-[#437EF7] text-white px-6 py-2 rounded-md">
-                                            View
-                                        </button>
-                                        <button
-                                            className="bg-red-500 text-white px-6 py-2 rounded-md"
-                                            onClick={() => handleDelete(row.id)}
-                                        >
-                                            Delete
+                                        {row.status !== "accepted" && (
+                                            <button className="bg-[#437EF7] text-white px-6 py-2 rounded-md">
+                                                Accept
+                                            </button>
+                                        )}
+                                        <button className="bg-red-500 text-white px-6 py-2 rounded-md">
+                                            Cancel
                                         </button>
                                     </td>
                                 </tr>
@@ -111,4 +109,4 @@ const Appointment = () => {
     );
 };
 
-export default Appointment;
+export default AppointmentDoctor;

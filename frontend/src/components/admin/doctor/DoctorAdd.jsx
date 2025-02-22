@@ -1,15 +1,17 @@
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { post } from "../../../utils/api";
+import { toast } from "react-toastify";
+
 
 const DoctorAdd = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
-        password: "",
         address: "",
         phone: "",
-        hobby: "",
     });
     console.log(formData);
     
@@ -21,7 +23,13 @@ const DoctorAdd = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+        const res =await post(`/api/add-doctor`,formData);
+        if(res.success ===1){
+            toast.success(res.message);
+            navigate("/admin/doctor");
+        } else{
+            toast.error(res.message);
+        }       
     };
 
     return (
@@ -56,19 +64,7 @@ const DoctorAdd = () => {
                             className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
                         />
                     </div>
-                    <div className="flex flex-col w-full gap-2">
-                        <label className="font-medium text-[14px] leading-[20px] tracking-[-0.28px]">
-                            Password
-                        </label>
-                        <input
-                            name="password"
-                            id="password"
-                            onChange={handleChange}
-                            type="password"
-                            value={formData.password}
-                            className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
-                        />
-                    </div>
+                    
                     <div className="flex flex-col w-full gap-2">
                         <label className="font-medium text-[14px] leading-[20px] tracking-[-0.28px]">
                             Phone
@@ -95,28 +91,16 @@ const DoctorAdd = () => {
                             className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
                         />
                     </div>
-                    <div className="flex flex-col w-full gap-2">
-                        <label className="font-medium text-[14px] leading-[20px] tracking-[-0.28px]">
-                            Hobby
-                        </label>
-                        <input
-                            name="hobby"
-                            id="hobby"
-                            onChange={handleChange}
-                            type="text"
-                            value={formData.hobby}
-                            className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
-                        />
-                    </div>
+                  
 
                     <button
                         onClick={handleSubmit}
                         className="bg-[#437EF7] text-white py-3 rounded-sm font-semibold tracking-[0.48px] "
                     >
-                        Add User
+                        Add Doctor
                     </button>
                     <button className="text-[#437EF7] font-semibold py-3 rounded-sm border-2 border-[#437EF7]">
-                        <Link to="/" className="w-full">
+                        <Link to="/admin/doctor" className="w-full">
                             Cancel
                         </Link>
                     </button>
