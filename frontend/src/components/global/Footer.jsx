@@ -9,11 +9,8 @@ const Footer = () => {
                   <p className="text-[1.2rem] font-semibold">AgroHealth&Services</p>
                   </Link>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Non reprehenderit provident rerum numquam deleniti corrupti
-                    aspernatur magnam tempore temporibus, dicta aperiam expedita
-                    sint cupiditate deserunt? Veritatis possimus earum alias
-                    reiciendis!
+                Agro Health Services is dedicated to promoting the well-being of both agriculture and livestock. 
+                We provide expert healthcare solutions, preventive measures, and guidance for healthier farms and animals.
                 </p>
             </div>
             <div className="flex-1">
