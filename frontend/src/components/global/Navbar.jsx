@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/authContext";
 
 const Navbar = () => {
     const { currentUser } = useContext(AuthContext);
+    console.log(currentUser)
     const [open, setOpen] = useState(false);
 
     const handleLinkClick = () => setOpen(false);
@@ -30,21 +31,23 @@ const Navbar = () => {
                                 <Link to="/contact" onClick={handleLinkClick}>
                                     <li>Contacts</li>
                                 </Link>
-                                <Link
-                                    to={
-                                        currentUser.role_id === 1
-                                            ? "/admin"
-                                            : currentUser.role_id === 2
-                                            ? "/doctor"
-                                            : "/user"
-                                    }
-                                    onClick={handleLinkClick}
-                                    className="py-[1rem] px-[2rem] bg-primary text-white rounded-sm"
-                                >
-                                    <li className="bg-primary text-white">
-                                        Dashboard
-                                    </li>
-                                </Link>
+                                {currentUser && (
+                                    <Link
+                                        to={
+                                            currentUser.role_id === 1
+                                                ? "/admin"
+                                                : currentUser.role_id === 2
+                                                ? "/doctor"
+                                                : "/user"
+                                        }
+                                        onClick={handleLinkClick}
+                                        className="py-[1rem] px-[2rem] bg-primary text-white rounded-sm"
+                                    >
+                                        <li className="bg-primary text-white">
+                                            Dashboard
+                                        </li>
+                                    </Link>
+                                )}
                             </ul>
                         </div>
                     </div>
@@ -97,6 +100,23 @@ const Navbar = () => {
                                 <Link to="/contact" onClick={handleLinkClick}>
                                     <li>Contacts</li>
                                 </Link>
+                                {currentUser && (
+                                    <Link
+                                        to={
+                                            currentUser.role_id === 1
+                                                ? "/admin"
+                                                : currentUser.role_id === 2
+                                                ? "/doctor"
+                                                : "/user"
+                                        }
+                                        onClick={handleLinkClick}
+                                        className="py-[1rem] px-[2rem] bg-primary text-white rounded-sm"
+                                    >
+                                        <li className="bg-primary text-white">
+                                            Dashboard
+                                        </li>
+                                    </Link>
+                                )}
                                 {currentUser ? (
                                     <div>{currentUser?.name}</div>
                                 ) : (

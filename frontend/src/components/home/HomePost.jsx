@@ -2,7 +2,7 @@ import React from "react";
 
 const HomePost = () => {
     return (
-        <div className="flex justify-between gap-6">
+        <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 justify-between gap-6">
             <div className="flex flex-col border-gray-100 rounded-sm border w-full hover:shadow-lg hover:shadow-gray-200 bg-gray-100">
                 <img
                     src={

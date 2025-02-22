@@ -207,7 +207,6 @@ const AdminSidebar = () => {
                             )}
                             {currentUser.role_id == 3 && (
                                 <ul class="flex flex-col space-y-1">
-                                    
                                     <li
                                         class="hs-accordion"
                                         id="users-accordion"
@@ -223,8 +222,8 @@ const AdminSidebar = () => {
                                                 User Profile
                                             </button>
                                         </Link>
-                                    </li>                                  
-                                   
+                                    </li>
+
                                     <li
                                         class="hs-accordion"
                                         id="projects-accordion"
@@ -257,7 +256,43 @@ const AdminSidebar = () => {
                                             </button>
                                         </Link>
                                     </li>
-                                    
+                                </ul>
+                            )}
+                            {currentUser.role_id == 2 && (
+                                <ul class="flex flex-col space-y-1">
+                                    <li
+                                        class="hs-accordion"
+                                        id="users-accordion"
+                                    >
+                                        <Link to="/doctor">
+                                            <button
+                                                type="button"
+                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                aria-expanded="true"
+                                                aria-controls="users-accordion-child"
+                                            >
+                                                <FaUser className="text-lg" />
+                                                Doctor Profile
+                                            </button>
+                                        </Link>
+                                    </li>
+
+                                    <li
+                                        class="hs-accordion"
+                                        id="projects-accordion"
+                                    >
+                                        <Link to="/doctor/allappointment">
+                                            <button
+                                                type="button"
+                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                aria-expanded="true"
+                                                aria-controls="projects-accordion-child"
+                                            >
+                                                <FaQrcode className="text-lg" />
+                                                All Appointment
+                                            </button>
+                                        </Link>
+                                    </li>
                                 </ul>
                             )}
                         </nav>
@@ -265,7 +300,6 @@ const AdminSidebar = () => {
                     {/* <!-- End Content --> */}
                 </div>
             </div>
-            
         </>
     );
 };

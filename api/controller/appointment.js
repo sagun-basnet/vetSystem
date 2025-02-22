@@ -7,7 +7,7 @@ export const bookAppointment = (req, res) => {
   db.query(q, [date, doctorId], (err, results) => {
     if (err) return res.status(500).json(err);
     if (results.length)
-      return res.status(409).json("Appointment already exists.");
+      return res.status(409).json({message:"Appointment already exists.",success:0});
     const q =
       "insert into appointment (date, service, user_id, doctor_id) values(?, ?, ?, ?)";
     db.query(q, [date, service, user_id, doctorId], (err, result) => {
@@ -15,6 +15,7 @@ export const bookAppointment = (req, res) => {
       res.status(201).json({
         message: "Appointment booked successfully.",
         result,
+        success: 1,
       });
     });
   });
@@ -59,10 +60,11 @@ export const cancelAppointment = (req, res) => {
   const id = req.params.id;
   const q = "delete from appointment where id = ?";
   db.query(q, [id], (err, result) => {
-    if (err) return res.status(500).json(err);
+    if (err) return res.status(500).json({err,success:0});
     res.status(200).json({
       message: "Appointment cancelled successfully.",
       result,
+      success: 1,
     });
   });
 };
