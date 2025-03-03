@@ -5,19 +5,55 @@ import { FaSearch } from "react-icons/fa";
 import { AiOutlineMessage } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 import { AuthContext } from "../../../Context/authContext";
+import Notification from "../notification/Notification";
+import { MdMessage } from "react-icons/md";
+import { FaLink } from "react-icons/fa";
 
 const Topbar = () => {
     const { currentUser } = useContext(AuthContext);
     const [modle, setModle] = useState(false);
+    const [openNotification, setOpenNotification] = useState(false);
+    const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false); // Track unread notifications
     console.log(modle);
+    //NOTIFICATION
+    // useEffect(() => {
+    //     // Fetch stored notifications using Axios
+    //     axios.get("http://localhost:3000/notifications")
+    //         .then((response) => {
+    //             setNotifications(response.data); // Assuming the response is in the expected format
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error fetching notifications", error);
+    //         });
+
+    //     // Listen for real-time notifications
+    //     socket.on("notification", (newNotification) => {
+    //         setNotifications((prev) => {
+    //             // Add new notification to the beginning of the list
+    //             const updatedNotifications = [newNotification, ...prev];
+    //             // Set the unread notification state
+    //             setHasUnreadNotifications(true);
+    //             return updatedNotifications;
+    //         });
+    //     });
+
+    //     // Clean up the socket listener when the component unmounts
+    //     return () => socket.off("notification");
+    // }, []);
+
+    // const handleNotificationClick = () => {
+    //     setOpenNotification(!openNotification);
+    //     if (openNotification) {
+    //         setHasUnreadNotifications(false); // Mark as read when opening the notification panel
+    //     }
+    // };
 
     return (
         <header class="sticky top-0 inset-x-0 flex z-[48] w-full bg-white  text-sm py-2.5">
             <nav class="px-4 sm:px-6 flex basis-full items-center w-full mx-auto">
                 <div class="me-5 lg:me-0 lg:hidden">
-                    <span>Vet System</span>
+                    <span>AgroHealth&Services</span>
                 </div>
-
                 <div class="w-full flex items-center justify-end ms-auto md:justify-between gap-x-1 md:gap-x-3">
                     <div class="hidden md:block">
                         {/* <!-- Search Input --> */}
@@ -145,10 +181,18 @@ const Topbar = () => {
                                 strokeWidth="2"
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
+                                onClick={() =>
+                                    setOpenNotification(!openNotification)
+                                }
                             >
                                 <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
                                 <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
                             </svg>
+
+                            {hasUnreadNotifications && (
+                                <span className="absolute top-0 right-0 block w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+                            )}
+
                             <span class="sr-only">Notifications</span>
                         </button>
 
@@ -241,6 +285,77 @@ const Topbar = () => {
                         </div>
                         {/* <!-- End Dropdown --> */}
                     </div>
+                    {/* {openNotification && */}
+                    {/* // <div className="absolute top-14 right-24 rounded-md">
+            //     <Notification />
+            // </div> */}
+                    {/* Notification Panel */}
+                    {openNotification && (
+                        <div className="absolute top-14 right-24 rounded-md bg-gray-100 py-4 px-7 w-[25rem] max-h-[37rem] overflow-y-auto flex flex-col">
+                            <h2 className="border-b-2 border-gray-300 py-4 text-[18px] font-medium">Notifications</h2>
+                            <div className="flex gap-3 border-b-2 border-gray-300 py-4">
+                                <div>
+                                    <MdMessage className="text-lg" />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <span className="text-[16px] font-medium text-justify">
+                                        This is the messigne to you that you have to show message
+                                    </span>
+                                    <span className="flex items-center gap-2 bg-gray-300 px-2 rounded-sm text-[14px]">
+                                        <FaLink />
+                                        <span>htttps://google.com</span>
+                                    </span>
+                                    <span className="text-[12px]">2024/02/98 at 3:00 PM</span>
+                                </div>
+                            </div>
+                            <div className="flex gap-3 border-b-2 border-gray-300 py-4">
+                                <div>
+                                    <MdMessage className="text-lg" />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <span className="text-[16px] font-medium text-justify">
+                                        This is the messigne to you that you have to show message
+                                    </span>
+                                    <span className="flex items-center gap-2 bg-gray-300 px-2 rounded-sm text-[14px]">
+                                        <FaLink />
+                                        <span>htttps://google.com</span>
+                                    </span>
+                                    <span className="text-[12px]">2024/02/98 at 3:00 PM</span>
+                                </div>
+                            </div>
+                            <div className="flex gap-3 border-b-2 border-gray-300 py-4">
+                                <div>
+                                    <MdMessage className="text-lg" />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <span className="text-[16px] font-medium text-justify">
+                                        This is the messigne to you that you have to show message
+                                    </span>
+                                    <span className="flex items-center gap-2 bg-gray-300 px-2 rounded-sm text-[14px]">
+                                        <FaLink />
+                                        <span>htttps://google.com</span>
+                                    </span>
+                                    <span className="text-[12px]">2024/02/98 at 3:00 PM</span>
+                                </div>
+                            </div>
+                            <div className="flex gap-3 border-b-2 border-gray-300 py-4">
+                                <div>
+                                    <MdMessage className="text-lg" />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <span className="text-[16px] font-medium text-justify">
+                                        This is the messigne to you that you have to show message
+                                    </span>
+                                    <span className="flex items-center gap-2 bg-gray-300 px-2 rounded-sm text-[14px]">
+                                        <FaLink />
+                                        <span>htttps://google.com</span>
+                                    </span>
+                                    <span className="text-[12px]">2024/02/98 at 3:00 PM</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    )}
                 </div>
             </nav>
         </header>
