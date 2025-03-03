@@ -1,23 +1,61 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
 import { AiOutlineMessage } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 import { AuthContext } from "../../../Context/authContext";
+import Notification from "../notification/Notification";
+import { MdMessage } from "react-icons/md";
+import { FaLink } from "react-icons/fa";
+import { get } from "../../../utils/api";
+import { io } from "socket.io-client";
+const socket = io("http://localhost:5050");
 
 const Topbar = () => {
     const { currentUser } = useContext(AuthContext);
     const [modle, setModle] = useState(false);
+    const [openNotification, setOpenNotification] = useState(false);
+    const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false); // Track unread notifications
     console.log(modle);
+    //NOTIFICATION
+    const [notifications, setNotifications] = useState([]);
+    console.log(notifications);
+
+    const [notification, setNotification] = useState([]);
+
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            try {
+                // Fetch stored notifications from MySQL
+                const res = await get("/notifications");
+                console.log(res);
+
+                setNotifications(res); // No need for `.json()`, Axios already parses JSON
+
+                // Listen for real-time notifications
+                socket.on("notification", (newNotification) => {
+                    setNotification((prev) => [newNotification, ...prev]);
+                });
+            } catch (error) {
+                console.error("Error fetching notifications:", error);
+            }
+        };
+
+        fetchApi(); // Call the async function
+
+        return () => {
+            socket.off("notification"); // Clean up the socket listener
+        };
+    }, [notification]);
 
     return (
         <header class="sticky top-0 inset-x-0 flex z-[48] w-full bg-white  text-sm py-2.5">
             <nav class="px-4 sm:px-6 flex basis-full items-center w-full mx-auto">
                 <div class="me-5 lg:me-0 lg:hidden">
-                    <span>Vet System</span>
+                    <span>AgroHealth&Services</span>
                 </div>
-
                 <div class="w-full flex items-center justify-end ms-auto md:justify-between gap-x-1 md:gap-x-3">
                     <div class="hidden md:block">
                         {/* <!-- Search Input --> */}
@@ -145,10 +183,18 @@ const Topbar = () => {
                                 strokeWidth="2"
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
+                                onClick={() =>
+                                    setOpenNotification(!openNotification)
+                                }
                             >
                                 <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
                                 <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
                             </svg>
+
+                            {hasUnreadNotifications && (
+                                <span className="absolute top-0 right-0 block w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+                            )}
+
                             <span class="sr-only">Notifications</span>
                         </button>
 
@@ -241,6 +287,37 @@ const Topbar = () => {
                         </div>
                         {/* <!-- End Dropdown --> */}
                     </div>
+                    {/* {openNotification && */}
+                    {/* // <div className="absolute top-14 right-24 rounded-md">
+            //     <Notification />
+            // </div> */}
+                    {/* Notification Panel */}
+                    {openNotification && (
+                        <div className="absolute top-14 right-24 rounded-md bg-gray-100 py-4 px-7 w-[25rem] max-h-[37rem] overflow-y-auto flex flex-col">
+                            <h2 className="border-b-2 border-gray-300 py-4 text-[18px] font-medium">Notifications</h2>
+                            {
+                                notifications.map((notif, index) => {
+                                    return (
+                                        <div key={index} className="flex gap-3 border-b-2 border-gray-300 py-4">
+                                            <div>
+                                                <MdMessage className="text-lg" />
+                                            </div>
+                                            <div className="flex flex-col gap-2">
+                                                <span className="text-[16px] font-medium text-justify">
+                                                    {notif.message}
+                                                </span>
+                                                <span className="flex items-center gap-2 bg-gray-300 px-2 rounded-sm text-[14px]">
+                                                    <FaLink />
+                                                    <a href={notif.link}>{notif.link}</a>
+                                                </span>
+                                                <span className="text-[12px]">{new Date(notif.created_at).toLocaleString()}</span>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    )}
                 </div>
             </nav>
         </header>

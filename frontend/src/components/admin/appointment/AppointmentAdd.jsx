@@ -42,8 +42,8 @@ const AppointmentAdd = () => {
 
     return (
         <div>
-            <div className="flex items-center justify-center h-[100vh] bg-[#f3f3f3]">
-                <div className="max-w-[343px] md:max-w-[550px] w-full flex flex-col gap-5 bg-white px-4 md:px-8 py-6 md:py-8 rounded-md shadow-sm shadow-slate-300">
+            <div className="flex items-center justify-center h-[90vh]">
+                <div className="max-w-[343px] md:max-w-[550px] w-full flex flex-col gap-5 bg-white px-4 md:px-8 py-6 md:py-8 rounded-md shadow-lg shadow-gray-300">
                     <h1 className="text-center font-bold text-3xl">
                         Add Appointment
                     </h1>
@@ -100,11 +100,7 @@ const AppointmentAdd = () => {
                     >
                         Add Appointment
                     </button>
-                    <button className="text-[#437EF7] font-semibold py-3 rounded-sm border-2 border-[#437EF7]">
-                        <Link to="/" className="w-full">
-                            Cancel
-                        </Link>
-                    </button>
+                    
                 </div>
             </div>
         </div>

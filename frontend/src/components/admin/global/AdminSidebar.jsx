@@ -11,7 +11,9 @@ import { MdManageHistory } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaBox, FaUser } from "react-icons/fa6";
 import { BsPostcard } from "react-icons/bs";
+import { IoIosNotifications } from "react-icons/io";
 import { AuthContext } from "../../../context/authContext";
+
 
 const AdminSidebar = () => {
     const { currentUser } = useContext(AuthContext);
@@ -103,7 +105,7 @@ const AdminSidebar = () => {
                         {/* <!-- Logo --> */}
                         <a
                             class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
-                            // href="/admin"
+                        // href="/admin"
                         >
                             <h2 className="text-white">AgroHealth&Services</h2>
                         </a>
@@ -196,6 +198,22 @@ const AdminSidebar = () => {
                                             >
                                                 <FaQrcode className="text-lg" />
                                                 Appointment
+                                            </button>
+                                        </Link>
+                                    </li>
+                                    <li
+                                        class="hs-accordion"
+                                        id="projects-accordion"
+                                    >
+                                        <Link to="/admin/notification">
+                                            <button
+                                                type="button"
+                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                                                aria-expanded="true"
+                                                aria-controls="projects-accordion-child"
+                                            >
+                                                <IoIosNotifications className="text-lg" />
+                                                Notification
                                             </button>
                                         </Link>
                                     </li>
