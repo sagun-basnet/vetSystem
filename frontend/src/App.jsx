@@ -21,6 +21,7 @@ import UserProfile from "./components/admin/user/UserProfile";
 import AppointmentAdd from "./components/admin/appointment/AppointmentAdd";
 import AppointmentDoctor from "./components/admin/appointment/AppointmentDoctor";
 import Footer from "./components/global/Footer";
+import Notification from "./components/admin/notification/Notification";
 
 const App = () => {
     // User Layout with Navbar
@@ -29,7 +30,7 @@ const App = () => {
             <>
                 <Navbar />
                 <Outlet />
-                <Footer/>
+                <Footer />
             </>
         );
     };
@@ -102,6 +103,10 @@ const App = () => {
                     element: <Post />,
                 },
                 {
+                    path: "notification",
+                    element: <Notification />,
+                },
+                {
                     path: "addpost",
                     element: <PostAdd />,
                 },
@@ -141,7 +146,7 @@ const App = () => {
                     path: "allappointment",
                     element: <AppointmentDoctor />,
                 },
-                
+
             ],
         },
     ]);
