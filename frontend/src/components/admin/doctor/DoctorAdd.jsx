@@ -14,7 +14,7 @@ const DoctorAdd = () => {
         phone: "",
     });
     console.log(formData);
-    
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,13 +23,13 @@ const DoctorAdd = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res =await post(`/api/add-doctor`,formData);
-        if(res.success ===1){
+        const res = await post(`/api/add-doctor`, formData);
+        if (res.success === 1) {
             toast.success(res.message);
             navigate("/admin/doctor");
-        } else{
+        } else {
             toast.error(res.message);
-        }       
+        }
     };
 
     return (
@@ -64,7 +64,7 @@ const DoctorAdd = () => {
                             className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
                         />
                     </div>
-                    
+
                     <div className="flex flex-col w-full gap-2">
                         <label className="font-medium text-[14px] leading-[20px] tracking-[-0.28px]">
                             Phone
@@ -91,7 +91,7 @@ const DoctorAdd = () => {
                             className="border-2 border-[#5c5c5c] outline-none py-3 px-2 w-full rounded-sm text-[14px] leading-[20px] tracking-[-0.28px]"
                         />
                     </div>
-                  
+
 
                     <button
                         onClick={handleSubmit}
