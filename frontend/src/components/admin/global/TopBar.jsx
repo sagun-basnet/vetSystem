@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
@@ -8,6 +8,9 @@ import { AuthContext } from "../../../Context/authContext";
 import Notification from "../notification/Notification";
 import { MdMessage } from "react-icons/md";
 import { FaLink } from "react-icons/fa";
+import { get } from "../../../utils/api";
+import { io } from "socket.io-client";
+const socket = io("http://localhost:5050");
 
 const Topbar = () => {
     const { currentUser } = useContext(AuthContext);
@@ -16,37 +19,36 @@ const Topbar = () => {
     const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false); // Track unread notifications
     console.log(modle);
     //NOTIFICATION
-    // useEffect(() => {
-    //     // Fetch stored notifications using Axios
-    //     axios.get("http://localhost:3000/notifications")
-    //         .then((response) => {
-    //             setNotifications(response.data); // Assuming the response is in the expected format
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error fetching notifications", error);
-    //         });
+    const [notifications, setNotifications] = useState([]);
+    console.log(notifications);
 
-    //     // Listen for real-time notifications
-    //     socket.on("notification", (newNotification) => {
-    //         setNotifications((prev) => {
-    //             // Add new notification to the beginning of the list
-    //             const updatedNotifications = [newNotification, ...prev];
-    //             // Set the unread notification state
-    //             setHasUnreadNotifications(true);
-    //             return updatedNotifications;
-    //         });
-    //     });
+    const [notification, setNotification] = useState([]);
 
-    //     // Clean up the socket listener when the component unmounts
-    //     return () => socket.off("notification");
-    // }, []);
 
-    // const handleNotificationClick = () => {
-    //     setOpenNotification(!openNotification);
-    //     if (openNotification) {
-    //         setHasUnreadNotifications(false); // Mark as read when opening the notification panel
-    //     }
-    // };
+    useEffect(() => {
+        const fetchApi = async () => {
+            try {
+                // Fetch stored notifications from MySQL
+                const res = await get("/notifications");
+                console.log(res);
+
+                setNotifications(res); // No need for `.json()`, Axios already parses JSON
+
+                // Listen for real-time notifications
+                socket.on("notification", (newNotification) => {
+                    setNotification((prev) => [newNotification, ...prev]);
+                });
+            } catch (error) {
+                console.error("Error fetching notifications:", error);
+            }
+        };
+
+        fetchApi(); // Call the async function
+
+        return () => {
+            socket.off("notification"); // Clean up the socket listener
+        };
+    }, [notification]);
 
     return (
         <header class="sticky top-0 inset-x-0 flex z-[48] w-full bg-white  text-sm py-2.5">
@@ -293,67 +295,27 @@ const Topbar = () => {
                     {openNotification && (
                         <div className="absolute top-14 right-24 rounded-md bg-gray-100 py-4 px-7 w-[25rem] max-h-[37rem] overflow-y-auto flex flex-col">
                             <h2 className="border-b-2 border-gray-300 py-4 text-[18px] font-medium">Notifications</h2>
-                            <div className="flex gap-3 border-b-2 border-gray-300 py-4">
-                                <div>
-                                    <MdMessage className="text-lg" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <span className="text-[16px] font-medium text-justify">
-                                        This is the messigne to you that you have to show message
-                                    </span>
-                                    <span className="flex items-center gap-2 bg-gray-300 px-2 rounded-sm text-[14px]">
-                                        <FaLink />
-                                        <span>htttps://google.com</span>
-                                    </span>
-                                    <span className="text-[12px]">2024/02/98 at 3:00 PM</span>
-                                </div>
-                            </div>
-                            <div className="flex gap-3 border-b-2 border-gray-300 py-4">
-                                <div>
-                                    <MdMessage className="text-lg" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <span className="text-[16px] font-medium text-justify">
-                                        This is the messigne to you that you have to show message
-                                    </span>
-                                    <span className="flex items-center gap-2 bg-gray-300 px-2 rounded-sm text-[14px]">
-                                        <FaLink />
-                                        <span>htttps://google.com</span>
-                                    </span>
-                                    <span className="text-[12px]">2024/02/98 at 3:00 PM</span>
-                                </div>
-                            </div>
-                            <div className="flex gap-3 border-b-2 border-gray-300 py-4">
-                                <div>
-                                    <MdMessage className="text-lg" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <span className="text-[16px] font-medium text-justify">
-                                        This is the messigne to you that you have to show message
-                                    </span>
-                                    <span className="flex items-center gap-2 bg-gray-300 px-2 rounded-sm text-[14px]">
-                                        <FaLink />
-                                        <span>htttps://google.com</span>
-                                    </span>
-                                    <span className="text-[12px]">2024/02/98 at 3:00 PM</span>
-                                </div>
-                            </div>
-                            <div className="flex gap-3 border-b-2 border-gray-300 py-4">
-                                <div>
-                                    <MdMessage className="text-lg" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <span className="text-[16px] font-medium text-justify">
-                                        This is the messigne to you that you have to show message
-                                    </span>
-                                    <span className="flex items-center gap-2 bg-gray-300 px-2 rounded-sm text-[14px]">
-                                        <FaLink />
-                                        <span>htttps://google.com</span>
-                                    </span>
-                                    <span className="text-[12px]">2024/02/98 at 3:00 PM</span>
-                                </div>
-                            </div>
-                            
+                            {
+                                notifications.map((notif, index) => {
+                                    return (
+                                        <div key={index} className="flex gap-3 border-b-2 border-gray-300 py-4">
+                                            <div>
+                                                <MdMessage className="text-lg" />
+                                            </div>
+                                            <div className="flex flex-col gap-2">
+                                                <span className="text-[16px] font-medium text-justify">
+                                                    {notif.message}
+                                                </span>
+                                                <span className="flex items-center gap-2 bg-gray-300 px-2 rounded-sm text-[14px]">
+                                                    <FaLink />
+                                                    <a href={notif.link}>{notif.link}</a>
+                                                </span>
+                                                <span className="text-[12px]">{new Date(notif.created_at).toLocaleString()}</span>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                     )}
                 </div>
