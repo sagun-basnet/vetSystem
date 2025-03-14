@@ -2,10 +2,11 @@ import { useContext, useState } from "react";
 // import { post } from "../../utils/api";
 import { AuthContext } from "../../context/authContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const navigate = useNavigate();
-    const { login } = useContext(AuthContext)
+    const { login } = useContext(AuthContext);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -17,13 +18,14 @@ const Login = () => {
             alert("Please fill in all fields");
             return;
         }
-
         const res = await login(formData);
-        // const res = post("/api/login", formData);
         console.log(res);
-
-        alert(`Login Sucessfully. Email: ${formData.email}, Password: ${formData.password}`);
-        navigate('/')
+        if (res.success == 1) {
+            toast.success("Login Successfully!");
+            navigate("/");
+        } else {
+            toast.error(res.message);
+        }
     };
 
     const handleChange = (e) => {
@@ -45,7 +47,6 @@ const Login = () => {
                         <label
                             htmlFor="email"
                             className="text-sm text-gray-700 pl-1"
-
                         >
                             Email
                         </label>
@@ -63,7 +64,6 @@ const Login = () => {
                         <label
                             htmlFor="password"
                             className=" text-sm text-gray-700 pl-1"
-
                         >
                             Password
                         </label>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { post } from "../../utils/api";
+import { toast } from "react-toastify";
 
 const OTP = () => {
     const location = useLocation();
@@ -12,17 +13,17 @@ const OTP = () => {
         email: email,
     });
     const [otpVerify,setOtpVerify] = useState();
-    console.log(otpVerify);
-    console.log(formData);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const res = post("/api/verify-otp", formData);
-
-        alert(`Email verified sucessfully`);
-        setOtpVerify(res.message);
-        navigate('/');
+        const res = await post("/api/verify-otp", formData);
+        if (res.success ===1) {
+            toast.success(res.message);
+            navigate("/login");
+        }else{
+            toast.error(res.message);
+        }
     };
 
     const handleChange = (e) => {

@@ -54,7 +54,7 @@ const Navbar = () => {
 
                     <div className="hidden lg:flex items-center gap-2">
                         {currentUser ? (
-                            <div className="w-[3.5rem] h-[3.5rem] bg-primary rounded-full grid place-items-center text-[1.5rem] font-semibold text-white">
+                            <div className="w-[3rem] h-[3rem] bg-primary rounded-full grid place-items-center text-[2rem] font-sm text-white">
                                 {currentUser?.name.charAt(0).toUpperCase()}
                             </div>
                         ) : (

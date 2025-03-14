@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { post } from "../utils/api";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const SignupPage = () => {
     const navigate = useNavigate();
@@ -12,10 +13,11 @@ const SignupPage = () => {
         address: "",
         phone: "",
         role_id: 3,
+        confirmPassword: "",
     });
     console.log(formData);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (
             !formData.name ||
@@ -24,17 +26,23 @@ const SignupPage = () => {
             !formData.address ||
             !formData.phone
         ) {
-            alert("Please fill in all fields");
+            toast.error("Please fill in all fields");
             return;
         }
-        const res = post("/api/register", formData);
+        if(formData.password!==formData.confirmPassword){
+            toast.error("Passwords do not match");
+            return;
+        }
+        const res = await post("/api/register", formData);
         console.log(res);
-
-        alert(`Registration successful! Email: ${formData}`);
-        // navigate('/')
-        navigate("/verify-otp", {
-            state: { email: formData.email },
-        });
+        if (res.success == 1) {
+            toast.success(res.message);
+            navigate("/verify-otp", {
+                state: { email: formData.email },
+            });
+        }else{
+            toast.error(res.message);
+        }
     };
 
     const handleChange = (e) => {

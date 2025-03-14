@@ -32,6 +32,14 @@ const AppointmentAdd = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (
+            formData.date == "" ||
+            formData.service == "" ||
+            formData.doctor_id == ""
+        ) {
+            toast.error("All fields are required");
+            return;
+        }
         const res = await post("/api/book-appointment", formData);
         if (res.success == 1) {
             toast.success(res.message);
@@ -100,7 +108,6 @@ const AppointmentAdd = () => {
                     >
                         Add Appointment
                     </button>
-                    
                 </div>
             </div>
         </div>
