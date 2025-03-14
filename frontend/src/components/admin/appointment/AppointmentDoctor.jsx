@@ -31,6 +31,10 @@ const AppointmentDoctor = () => {
             toast.error(res.message);
         }
     };
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("en-CA");
+    };
     return (
         <div className="flex-1 shadow-lg shadow-gray-300 rounded-md px-3 py-3">
             <div className="flex justify-between">
@@ -76,7 +80,7 @@ const AppointmentDoctor = () => {
                                         {row.service}
                                     </td>
                                     <td className="px-4 py-2 border-b text-sm text-gray-800">
-                                        {row.date}
+                                        {formatDate(row.date)}
                                     </td>
                                     <td
                                         className={`px-4 py-2 border-b text-sm text-gray-800 ${

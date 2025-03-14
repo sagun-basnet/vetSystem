@@ -24,7 +24,6 @@ const Topbar = () => {
 
     const [notification, setNotification] = useState([]);
 
-
     useEffect(() => {
         const fetchApi = async () => {
             try {
@@ -294,28 +293,40 @@ const Topbar = () => {
                     {/* Notification Panel */}
                     {openNotification && (
                         <div className="absolute top-14 right-24 rounded-md bg-gray-100 py-4 px-7 w-[25rem] max-h-[37rem] overflow-y-auto flex flex-col">
-                            <h2 className="border-b-2 border-gray-300 py-4 text-[18px] font-medium">Notifications</h2>
-                            {
-                                notifications.map((notif, index) => {
-                                    return (
-                                        <div key={index} className="flex gap-3 border-b-2 border-gray-300 py-4">
-                                            <div>
-                                                <MdMessage className="text-lg" />
-                                            </div>
-                                            <div className="flex flex-col gap-2">
-                                                <span className="text-[16px] font-medium text-justify">
-                                                    {notif.message}
-                                                </span>
-                                                <span className="flex items-center gap-2 bg-gray-300 px-2 rounded-sm text-[14px]">
-                                                    <FaLink />
-                                                    <a href={notif.link}>{notif.link}</a>
-                                                </span>
-                                                <span className="text-[12px]">{new Date(notif.created_at).toLocaleString()}</span>
-                                            </div>
+                            <h2 className="border-b-2 border-gray-300 py-4 text-[18px] font-medium">
+                                Notifications
+                            </h2>
+                            {notifications.map((notif, index) => {
+                                return (
+                                    <div
+                                        key={index}
+                                        className="flex gap-3 border-b-2 border-gray-300 py-4"
+                                    >
+                                        <div>
+                                            <MdMessage className="text-lg" />
                                         </div>
-                                    )
-                                })
-                            }
+                                        <div className="flex flex-col gap-2">
+                                            <span className="text-[16px] font-medium text-justify">
+                                                {notif.message}
+                                            </span>
+                                            <span className="flex items-center gap-2 bg-gray-300 px-2 rounded-sm text-[14px]">
+                                                <FaLink />
+                                                <a
+                                                    href={notif.link}
+                                                    target="_blank"
+                                                >
+                                                    {notif.link}{" "}
+                                                </a>
+                                            </span>
+                                            <span className="text-[12px]">
+                                                {new Date(
+                                                    notif.created_at
+                                                ).toLocaleString()}
+                                            </span>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     )}
                 </div>

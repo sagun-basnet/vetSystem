@@ -43,16 +43,14 @@ const Appointment = () => {
         const res = await get(`/api/cancel-appointment/${id}`);
         if (res.success === 1) {
             toast.success(res.message);
-            fetchData(); // Refresh data after deletion
+            fetchData(); 
         } else {
             toast.error(res.message);
         }
     };
-
-    // Function to format date (YYYY-MM-DD)
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        return date.toLocaleDateString("en-CA"); // "en-CA" format is YYYY-MM-DD
+        return date.toLocaleDateString("en-CA"); 
     };
 
     return (
@@ -106,10 +104,8 @@ const Appointment = () => {
                             ))}
                         </tbody>
                     </table>
-
-                    {/* Modal for viewing appointment */}
                     {open && singleAppointment && (
-                        <div className="absolute top-[50%] right-[50%] py-9 px-20 bg-gray-50 shadow-lg shadow-gray-300 rounded-md">
+                        <div className="absolute top-[40%] right-[40%] py-9 px-20 bg-gray-50 shadow-lg shadow-gray-300 rounded-md">
                             <div className="space-y-2">
                                 <MdCancel
                                     className="absolute top-3 right-3 text-2xl cursor-pointer"
