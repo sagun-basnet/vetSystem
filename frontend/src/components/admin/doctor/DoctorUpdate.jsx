@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { post, get } from "../../../utils/api";
+import { toast } from "react-toastify";
 
 const DoctorUpdate = () => {
     const location = useLocation();
@@ -31,9 +32,14 @@ const DoctorUpdate = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await post(`/api//update-user/${user_id}`, data);
-        console.log(res);
-        navigate("/admin/user");
+        const res = await post(`/api/update-doctor/${user_id}`, data);
+        if(res.success===1){
+            toast.success("Doctor Update successfully!");
+            navigate("/admin/doctor");
+        }else{
+            toast.error(res.message);
+        }
+        console.log(res)
     };
 
     return (
@@ -106,7 +112,7 @@ const DoctorUpdate = () => {
                     type="submit"
                     className="text-primary font-semibold py-3 rounded-sm border-2 border-primary"
                 >
-                    <Link to={"/admin/user"}>Cancel</Link>
+                    <Link to={"/admin/doctor"}>Cancel</Link>
                 </button>
             </div>
         </div>

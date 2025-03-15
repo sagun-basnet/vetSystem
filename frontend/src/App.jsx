@@ -22,6 +22,7 @@ import AppointmentAdd from "./components/admin/appointment/AppointmentAdd";
 import AppointmentDoctor from "./components/admin/appointment/AppointmentDoctor";
 import Footer from "./components/global/Footer";
 import Notification from "./components/admin/notification/Notification";
+import AppointmentAdmin from "./components/admin/appointment/AppoointmentAdmin";
 
 const App = () => {
     // User Layout with Navbar
@@ -112,7 +113,7 @@ const App = () => {
                 },
                 {
                     path: "appointment",
-                    element: <Appointment />,
+                    element: <AppointmentAdmin />,
                 },
             ],
         },
