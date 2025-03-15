@@ -21,7 +21,7 @@ const Main = () => {
                         We provide expert healthcare solutions, preventive measures, and guidance for healthier farms and animals.
                     </p>
                     <div className="flex justify-center md:justify-end">
-                        <button className="flex gap-2 items-center px-9 bg-primary border-2 border-primary text-white py-3 rounded-sm font-semibold transition-all duration-500 ease-in-out hover:bg-white hover:text-primary">
+                        <button className="flex gap-2 items-center px-9 bg-primary border-2 border-primary text-white py-3 rounded-sm font-semibold transition-all duration-500 ease-in-out hover:bg-white hover:text-primary mr-2">
                             Post <FaArrowRight />
                         </button>
                     </div>
