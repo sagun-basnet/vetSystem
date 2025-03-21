@@ -6,6 +6,8 @@ import postRoute from "./routes/postRoute.js";
 import adminRoute from "./routes/adminRoute.js";
 import userRoute from "./routes/userRoute.js";
 import appointmentRoute from "./routes/appointmentRoute.js";
+import formRoutes from "./routes/formRoute.js";
+
 import { createServer } from "http";
 import { Server } from "socket.io";
 import {
@@ -46,7 +48,7 @@ io.on("connection", (socket) => {
       }
 
       socket.emit("previous-notifications", rows);
-      console.log(rows, ":Main file log");
+      // console.log(rows, ":Main file log");
     }
   );
 
@@ -63,6 +65,7 @@ app.use("/api", userRoute);
 app.use("/api", adminRoute);
 app.use("/api", postRoute);
 app.use("/api", appointmentRoute);
+app.use("/api", formRoutes);
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

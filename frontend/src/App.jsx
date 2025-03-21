@@ -23,142 +23,146 @@ import AppointmentDoctor from "./components/admin/appointment/AppointmentDoctor"
 import Footer from "./components/global/Footer";
 import Notification from "./components/admin/notification/Notification";
 import AppointmentAdmin from "./components/admin/appointment/AppoointmentAdmin";
+import FormData from "./components/admin/form/FormData";
 
 const App = () => {
-    // User Layout with Navbar
-    const Layout = () => {
-        return (
-            <>
-                <Navbar />
-                <Outlet />
-                <Footer />
-            </>
-        );
-    };
-
-    const AdminLayout = () => {
-        return (
-            <>
-                <AdminMain />
-            </>
-        );
-    };
-
-    const router = createBrowserRouter([
-        {
-            path: "/",
-            element: <Layout />,
-            children: [
-                {
-                    path: "/",
-                    element: <HomePage />,
-                },
-            ],
-        },
-        {
-            path: "/login",
-            element: <LoginPage />,
-        },
-        {
-            path: "/signup",
-            element: <SignupPage />,
-        },
-        {
-            path: "/verify-otp",
-            element: <AuthOTP />,
-        },
-        {
-            path: "/admin",
-            element: <AdminLayout />,
-            children: [
-                {
-                    path: "",
-                    element: <Dashboard />,
-                },
-                {
-                    path: "user",
-                    element: <User />,
-                },
-                {
-                    path: "adduser",
-                    element: <UserAdd />,
-                },
-                {
-                    path: "updateuser/:id",
-                    element: <UserUpdate />,
-                },
-                {
-                    path: "updatedoctor/:id",
-                    element: <DoctorUpdate />,
-                },
-                {
-                    path: "doctor",
-                    element: <Doctor />,
-                },
-                {
-                    path: "adddoctor",
-                    element: <DoctorAdd />,
-                },
-                {
-                    path: "post",
-                    element: <Post />,
-                },
-                {
-                    path: "notification",
-                    element: <Notification />,
-                },
-                {
-                    path: "addpost",
-                    element: <PostAdd />,
-                },
-                {
-                    path: "appointment",
-                    element: <AppointmentAdmin />,
-                },
-            ],
-        },
-        {
-            path: "/user",
-            element: <AdminLayout />,
-            children: [
-                {
-                    path: "",
-                    element: <UserProfile />,
-                },
-                {
-                    path: "userappointment",
-                    element: <Appointment />,
-                },
-                {
-                    path: "addappointment",
-                    element: <AppointmentAdd />,
-                },
-            ],
-        },
-        {
-            path: "/doctor",
-            element: <AdminLayout />,
-            children: [
-                {
-                    path: "",
-                    element: <UserProfile />,
-                },
-                {
-                    path: "allappointment",
-                    element: <AppointmentDoctor />,
-                },
-
-            ],
-        },
-    ]);
-
+  // User Layout with Navbar
+  const Layout = () => {
     return (
-        <div className="flex justify-center min-h-screen">
-            <div className="App font-heading w-full max-w-[343px]  md:max-w-[704px] lg:max-w-[1240px] ">
-                <RouterProvider router={router} />
-            </div>
-        </div>
+      <>
+        <Navbar />
+        <Outlet />
+        <Footer />
+      </>
     );
+  };
+
+  const AdminLayout = () => {
+    return (
+      <>
+        <AdminMain />
+      </>
+    );
+  };
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <HomePage />,
+        },
+      ],
+    },
+    {
+      path: "/login",
+      element: <LoginPage />,
+    },
+    {
+      path: "/signup",
+      element: <SignupPage />,
+    },
+    {
+      path: "/verify-otp",
+      element: <AuthOTP />,
+    },
+    {
+      path: "/admin",
+      element: <AdminLayout />,
+      children: [
+        {
+          path: "",
+          element: <Dashboard />,
+        },
+        {
+          path: "user",
+          element: <User />,
+        },
+        {
+          path: "adduser",
+          element: <UserAdd />,
+        },
+        {
+          path: "updateuser/:id",
+          element: <UserUpdate />,
+        },
+        {
+          path: "updatedoctor/:id",
+          element: <DoctorUpdate />,
+        },
+        {
+          path: "doctor",
+          element: <Doctor />,
+        },
+        {
+          path: "adddoctor",
+          element: <DoctorAdd />,
+        },
+        {
+          path: "post",
+          element: <Post />,
+        },
+        {
+          path: "notification",
+          element: <Notification />,
+        },
+        {
+          path: "form-data",
+          element: <FormData />,
+        },
+        {
+          path: "addpost",
+          element: <PostAdd />,
+        },
+        {
+          path: "appointment",
+          element: <AppointmentAdmin />,
+        },
+      ],
+    },
+    {
+      path: "/user",
+      element: <AdminLayout />,
+      children: [
+        {
+          path: "",
+          element: <UserProfile />,
+        },
+        {
+          path: "userappointment",
+          element: <Appointment />,
+        },
+        {
+          path: "addappointment",
+          element: <AppointmentAdd />,
+        },
+      ],
+    },
+    {
+      path: "/doctor",
+      element: <AdminLayout />,
+      children: [
+        {
+          path: "",
+          element: <UserProfile />,
+        },
+        {
+          path: "allappointment",
+          element: <AppointmentDoctor />,
+        },
+      ],
+    },
+  ]);
+
+  return (
+    <div className="flex justify-center min-h-screen">
+      <div className="App font-heading w-full max-w-[343px]  md:max-w-[704px] lg:max-w-[1240px] ">
+        <RouterProvider router={router} />
+      </div>
+    </div>
+  );
 };
 
 export default App;

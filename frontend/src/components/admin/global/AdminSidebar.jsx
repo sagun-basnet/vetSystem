@@ -12,28 +12,28 @@ import { Link } from "react-router-dom";
 import { FaBox, FaUser } from "react-icons/fa6";
 import { BsPostcard } from "react-icons/bs";
 import { IoIosNotifications } from "react-icons/io";
+// import { AuthContext } from "../../../context/authContext";
 import { AuthContext } from "../../../context/authContext";
 
-
 const AdminSidebar = () => {
-    const { currentUser } = useContext(AuthContext);
-    console.log(currentUser.role_id);
-    const [activeSection, setActiveSection] = useState("");
-    const [showCategories, setShowCategories] = useState(false); // To toggle categories
+  const { currentUser } = useContext(AuthContext);
+  console.log(currentUser.role_id);
+  const [activeSection, setActiveSection] = useState("");
+  const [showCategories, setShowCategories] = useState(false); // To toggle categories
 
-    const handleClick = (section) => {
-        setActiveSection(section);
-    };
+  const handleClick = (section) => {
+    setActiveSection(section);
+  };
 
-    const toggleCategories = () => {
-        setShowCategories(!showCategories); // Toggle category dropdown
-    };
+  const toggleCategories = () => {
+    setShowCategories(!showCategories); // Toggle category dropdown
+  };
 
-    return (
-        <>
-            {/* <!-- ========== MAIN CONTENT ========== --> */}
-            {/* <!-- Breadcrumb --> */}
-            {/* <div class="sticky top-0 inset-x-0 z-20 bg-white border-y px-0 sm:px-6 lg:px-8 lg:hidden dark:bg-neutral-800 dark:border-neutral-700">
+  return (
+    <>
+      {/* <!-- ========== MAIN CONTENT ========== --> */}
+      {/* <!-- Breadcrumb --> */}
+      {/* <div class="sticky top-0 inset-x-0 z-20 bg-white border-y px-0 sm:px-6 lg:px-8 lg:hidden dark:bg-neutral-800 dark:border-neutral-700">
                 <div class="flex items-center py-2">
                     <button
                         type="button"
@@ -90,236 +90,211 @@ const AdminSidebar = () => {
                     </ol>
                 </div>
             </div> */}
-            {/* <!-- End Breadcrumb --> */}
+      {/* <!-- End Breadcrumb --> */}
 
-            {/* <!-- Sidebar --> */}
-            <div
-                id="hs-application-sidebar"
-                class="hs-overlay [--auto-close:lg]  hs-overlay-open:translate-x-0  -translate-x-full transition-all duration-300 transform  w-[260px] h-full  hidden  fixed inset-y-0 start-0 z-[60]  bg-gray-900  lg:block lg:translate-x-0 lg:end-auto lg:bottom-0  dark:bg-neutral-800 dark:border-neutral-700"
-                role="dialog"
-                tabindex="-1"
-                aria-label="Sidebar"
+      {/* <!-- Sidebar --> */}
+      <div
+        id="hs-application-sidebar"
+        class="hs-overlay [--auto-close:lg]  hs-overlay-open:translate-x-0  -translate-x-full transition-all duration-300 transform  w-[260px] h-full  hidden  fixed inset-y-0 start-0 z-[60]  bg-gray-900  lg:block lg:translate-x-0 lg:end-auto lg:bottom-0  dark:bg-neutral-800 dark:border-neutral-700"
+        role="dialog"
+        tabindex="-1"
+        aria-label="Sidebar"
+      >
+        <div class="relative flex flex-col h-full max-h-full">
+          <div class="px-8 pt-4">
+            {/* <!-- Logo --> */}
+            <a
+              class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
+              // href="/admin"
             >
-                <div class="relative flex flex-col h-full max-h-full">
-                    <div class="px-8 pt-4">
-                        {/* <!-- Logo --> */}
-                        <a
-                            class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
-                        // href="/admin"
-                        >
-                            <h2 className="text-white">AgroHealth&Services</h2>
-                        </a>
-                        {/* <!-- End Logo --> */}
-                    </div>
+              <h2 className="text-white">AgroHealth&Services</h2>
+            </a>
+            {/* <!-- End Logo --> */}
+          </div>
 
-                    {/* <!-- Content --> */}
-                    <div class="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
-                        <nav
-                            class="hs-accordion-group p-3 w-full flex flex-col flex-wrap"
-                            data-hs-accordion-always-open
-                        >
-                            {currentUser.role_id == 1 && (
-                                <ul class="flex flex-col space-y-1">
-                                    <li
-                                        class="hs-accordion"
-                                        id="users-accordion"
-                                    >
-                                        <Link to="/admin">
-                                            <button
-                                                type="button"
-                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                                aria-expanded="true"
-                                                aria-controls="users-accordion-child"
-                                            >
-                                                <MdOutlineDashboard className="text-lg" />
-                                                Dashboard
-                                            </button>
-                                        </Link>
-                                    </li>
-                                    <li
-                                        class="hs-accordion"
-                                        id="users-accordion"
-                                    >
-                                        <Link to="/admin/user">
-                                            <button
-                                                type="button"
-                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                                aria-expanded="true"
-                                                aria-controls="users-accordion-child"
-                                            >
-                                                <FaUser className="text-lg" />
-                                                User
-                                            </button>
-                                        </Link>
-                                    </li>
+          {/* <!-- Content --> */}
+          <div class="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
+            <nav
+              class="hs-accordion-group p-3 w-full flex flex-col flex-wrap"
+              data-hs-accordion-always-open
+            >
+              {currentUser.role_id == 1 && (
+                <ul class="flex flex-col space-y-1">
+                  <li class="hs-accordion" id="users-accordion">
+                    <Link to="/admin">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="users-accordion-child"
+                      >
+                        <MdOutlineDashboard className="text-lg" />
+                        Dashboard
+                      </button>
+                    </Link>
+                  </li>
+                  <li class="hs-accordion" id="users-accordion">
+                    <Link to="/admin/user">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="users-accordion-child"
+                      >
+                        <FaUser className="text-lg" />
+                        User
+                      </button>
+                    </Link>
+                  </li>
 
-                                    <li
-                                        class="hs-accordion"
-                                        id="projects-accordion"
-                                    >
-                                        <Link to="/admin/doctor">
-                                            <button
-                                                type="button"
-                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                                aria-expanded="true"
-                                                aria-controls="projects-accordion-child"
-                                            >
-                                                <FaUserDoctor className="text-lg" />
-                                                Doctor
-                                            </button>
-                                        </Link>
-                                    </li>
-                                    <li
-                                        class="hs-accordion"
-                                        id="projects-accordion"
-                                    >
-                                        <Link to="/admin/post">
-                                            <button
-                                                type="button"
-                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                                aria-expanded="true"
-                                                aria-controls="projects-accordion-child"
-                                            >
-                                                <BsPostcard className="text-lg" />
-                                                Post
-                                            </button>
-                                        </Link>
-                                    </li>
-                                    <li
-                                        class="hs-accordion"
-                                        id="projects-accordion"
-                                    >
-                                        <Link to="/admin/appointment">
-                                            <button
-                                                type="button"
-                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                                aria-expanded="true"
-                                                aria-controls="projects-accordion-child"
-                                            >
-                                                <FaQrcode className="text-lg" />
-                                                Appointment
-                                            </button>
-                                        </Link>
-                                    </li>
-                                    <li
-                                        class="hs-accordion"
-                                        id="projects-accordion"
-                                    >
-                                        <Link to="/admin/notification">
-                                            <button
-                                                type="button"
-                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                                aria-expanded="true"
-                                                aria-controls="projects-accordion-child"
-                                            >
-                                                <IoIosNotifications className="text-lg" />
-                                                Notification
-                                            </button>
-                                        </Link>
-                                    </li>
-                                    <li
-                                        class="hs-accordion"
-                                        id="projects-accordion"
-                                    ></li>
-                                </ul>
-                            )}
-                            {currentUser.role_id == 3 && (
-                                <ul class="flex flex-col space-y-1">
-                                    <li
-                                        class="hs-accordion"
-                                        id="users-accordion"
-                                    >
-                                        <Link to="/user">
-                                            <button
-                                                type="button"
-                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                                aria-expanded="true"
-                                                aria-controls="users-accordion-child"
-                                            >
-                                                <FaUser className="text-lg" />
-                                                User Profile
-                                            </button>
-                                        </Link>
-                                    </li>
+                  <li class="hs-accordion" id="projects-accordion">
+                    <Link to="/admin/doctor">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="projects-accordion-child"
+                      >
+                        <FaUserDoctor className="text-lg" />
+                        Doctor
+                      </button>
+                    </Link>
+                  </li>
+                  <li class="hs-accordion" id="projects-accordion">
+                    <Link to="/admin/post">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="projects-accordion-child"
+                      >
+                        <BsPostcard className="text-lg" />
+                        Post
+                      </button>
+                    </Link>
+                  </li>
+                  <li class="hs-accordion" id="projects-accordion">
+                    <Link to="/admin/appointment">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="projects-accordion-child"
+                      >
+                        <FaQrcode className="text-lg" />
+                        Appointment
+                      </button>
+                    </Link>
+                  </li>
+                  <li class="hs-accordion" id="projects-accordion">
+                    <Link to="/admin/notification">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="projects-accordion-child"
+                      >
+                        <IoIosNotifications className="text-lg" />
+                        Notification
+                      </button>
+                    </Link>
+                    <Link to="/admin/form-data">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="projects-accordion-child"
+                      >
+                        <IoIosNotifications className="text-lg" />
+                        Form Data
+                      </button>
+                    </Link>
+                  </li>
+                  <li class="hs-accordion" id="projects-accordion"></li>
+                </ul>
+              )}
+              {currentUser.role_id == 3 && (
+                <ul class="flex flex-col space-y-1">
+                  <li class="hs-accordion" id="users-accordion">
+                    <Link to="/user">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="users-accordion-child"
+                      >
+                        <FaUser className="text-lg" />
+                        User Profile
+                      </button>
+                    </Link>
+                  </li>
 
-                                    <li
-                                        class="hs-accordion"
-                                        id="projects-accordion"
-                                    >
-                                        <Link to="/user/userappointment">
-                                            <button
-                                                type="button"
-                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                                aria-expanded="true"
-                                                aria-controls="projects-accordion-child"
-                                            >
-                                                <FaQrcode className="text-lg" />
-                                                My Appointment
-                                            </button>
-                                        </Link>
-                                    </li>
-                                    <li
-                                        class="hs-accordion"
-                                        id="projects-accordion"
-                                    >
-                                        <Link to="/user/addappointment">
-                                            <button
-                                                type="button"
-                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                                aria-expanded="true"
-                                                aria-controls="projects-accordion-child"
-                                            >
-                                                <FaQrcode className="text-lg" />
-                                                Add Appointment
-                                            </button>
-                                        </Link>
-                                    </li>
-                                </ul>
-                            )}
-                            {currentUser.role_id == 2 && (
-                                <ul class="flex flex-col space-y-1">
-                                    <li
-                                        class="hs-accordion"
-                                        id="users-accordion"
-                                    >
-                                        <Link to="/doctor">
-                                            <button
-                                                type="button"
-                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                                aria-expanded="true"
-                                                aria-controls="users-accordion-child"
-                                            >
-                                                <FaUser className="text-lg" />
-                                                Doctor Profile
-                                            </button>
-                                        </Link>
-                                    </li>
+                  <li class="hs-accordion" id="projects-accordion">
+                    <Link to="/user/userappointment">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="projects-accordion-child"
+                      >
+                        <FaQrcode className="text-lg" />
+                        My Appointment
+                      </button>
+                    </Link>
+                  </li>
+                  <li class="hs-accordion" id="projects-accordion">
+                    <Link to="/user/addappointment">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="projects-accordion-child"
+                      >
+                        <FaQrcode className="text-lg" />
+                        Add Appointment
+                      </button>
+                    </Link>
+                  </li>
+                </ul>
+              )}
+              {currentUser.role_id == 2 && (
+                <ul class="flex flex-col space-y-1">
+                  <li class="hs-accordion" id="users-accordion">
+                    <Link to="/doctor">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="users-accordion-child"
+                      >
+                        <FaUser className="text-lg" />
+                        Doctor Profile
+                      </button>
+                    </Link>
+                  </li>
 
-                                    <li
-                                        class="hs-accordion"
-                                        id="projects-accordion"
-                                    >
-                                        <Link to="/doctor/allappointment">
-                                            <button
-                                                type="button"
-                                                class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
-                                                aria-expanded="true"
-                                                aria-controls="projects-accordion-child"
-                                            >
-                                                <FaQrcode className="text-lg" />
-                                                All Appointment
-                                            </button>
-                                        </Link>
-                                    </li>
-                                </ul>
-                            )}
-                        </nav>
-                    </div>
-                    {/* <!-- End Content --> */}
-                </div>
-            </div>
-        </>
-    );
+                  <li class="hs-accordion" id="projects-accordion">
+                    <Link to="/doctor/allappointment">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="projects-accordion-child"
+                      >
+                        <FaQrcode className="text-lg" />
+                        All Appointment
+                      </button>
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </nav>
+          </div>
+          {/* <!-- End Content --> */}
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default AdminSidebar;

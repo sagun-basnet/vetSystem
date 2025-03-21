@@ -1,7 +1,7 @@
 import { db } from "../db/db.js";
 export const sendNotification = (req, res, io) => {
   const { message, link } = req.body;
-  console.log(message, ":Message");
+  // console.log(message, ":Message");
 
   if (!message) return res.status(400).json({ error: "Message is required" });
 
@@ -16,7 +16,7 @@ export const sendNotification = (req, res, io) => {
         [result.insertId],
         (errr, newNotification) => {
           if (errr) return res.status(500).json(errr);
-          console.log(newNotification, ":New Notification: ");
+          // console.log(newNotification, ":New Notification: ");
 
           io.emit("notification", newNotification[0]);
 
