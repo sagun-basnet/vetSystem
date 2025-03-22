@@ -1,100 +1,92 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 const FormData = () => {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [id, setId] = useState(null);
 
-  const fecthData = async () => {
-    await axios
-      .get("http://localhost:5050/api/form-data")
-      .then((res) => {
-        console.log(res.data.formResponses);
-
-        setData(res.data.formResponses);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const fetchData = async () => {
+    try {
+      const res = await axios.get("http://localhost:5050/api/form-data");
+      setData(res.data.formResponses);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const obj = {};
-
   useEffect(() => {
-    fecthData();
+    fetchData();
   }, []);
+
   return (
-    <div className="flex-1 shadow-lg shadow-gray-300 rounded-md px-3 py-3">
-      <div className="flex justify-between">
-        <h1 className="font-medium text-[30px] text-primary">Form Data</h1>
-      </div>
-      <div className="overflow-x-auto my-6">
-        <table className="min-w-full table-auto border-separate border-spacing-0">
+    <div className="flex-1 shadow-lg shadow-gray-300 rounded-md px-6 py-4">
+      <h1 className="font-semibold text-[26px] text-primary mb-4">Form Data</h1>
+
+      {/* Responsive Table Container */}
+      <div className="overflow-auto rounded-lg border border-gray-200">
+        <table className="min-w-full border-collapse">
           <thead>
-            <tr className="bg-gray-100">
-              <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                Date
-              </th>
-              <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                Name
-              </th>
-              <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                Address
-              </th>
-              <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                Contact
-              </th>
-              <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                Registration Number
-              </th>
-              <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                Pan Number
-              </th>
-              <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                Type of Agricultural Business
-              </th>
-              <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                Type and Quantity of Production
-              </th>
-              <th className="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">
-                Action
-              </th>
+            <tr className="bg-gray-100 text-gray-700 text-sm text-center">
+              {[
+                "Date",
+                "Name",
+                "Address",
+                "Contact",
+                "Registration Number",
+                "Pan Number",
+                "Agricultural Business",
+                "Production Details",
+                "Action",
+              ].map((heading, index) => (
+                <th key={index} className="px-6 py-3 border min-w-[180px]">
+                  {heading}
+                </th>
+              ))}
             </tr>
           </thead>
-          <tbody className="h-[calc(100vh-20rem)] overflow-y-scroll">
+          <tbody>
             {data.map((response, rowIndex) => (
-              <tr key={rowIndex} className="border">
+              <tr key={rowIndex} className="text-center text-gray-800 text-sm even:bg-gray-50">
                 {Object.values(response).map((value, colIndex) => (
-                  <td key={colIndex} className="border p-2">
+                  <td key={colIndex} className="px-6 py-3 border min-w-[180px] whitespace-nowrap">
                     {value}
                   </td>
                 ))}
+                <td className="px-6 py-3 border flex justify-center gap-4">
+                  <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
+                    Update
+                  </button>
+                  <button
+                    className="bg-red-500 text-white px-4 py-2 rounded-md"
+                    onClick={() => {
+                      setId(response.id);
+                      setOpen(true);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Delete Confirmation */}
       {open && (
-        <div className="absolute top-[10%] right-[30%] py-9 px-7 bg-gray-50 shadow-lg shadow-gray-300 rounded-md">
-          <div className="space-y-3">
-            <div>
-              <p>Are you want to delete this user</p>
-            </div>
-            <div className="flex justify-between">
-              <button
-                className="bg-red-500 text-white px-6 py-2 rounded-md"
-                onClick={() => handleDelete()}
-              >
-                Delete
-              </button>
-              <button
-                className="bg-[#437EF7] text-white px-6 py-2 rounded-md"
-                onClick={() => setOpen(false)}
-              >
-                Cancel
-              </button>
-            </div>
+        <div className="absolute top-1/4 left-1/3 bg-white shadow-lg p-6 rounded-md">
+          <p className="mb-4">Are you sure you want to delete this user?</p>
+          <div className="flex justify-between">
+            <button className="bg-red-500 text-white px-4 py-2 rounded-md">
+              Delete
+            </button>
+            <button
+              className="bg-gray-500 text-white px-4 py-2 rounded-md"
+              onClick={() => setOpen(false)}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       )}

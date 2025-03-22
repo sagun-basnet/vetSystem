@@ -10,7 +10,7 @@ export const getGoogleFormData = async (req, res) => {
     const sheets = google.sheets({ version: "v4", auth: client });
 
     const sheetId = process.env.SHEET_ID;
-    const range = "Form responses 1!A:D"; // Adjust based on your sheet structure
+    const range = "Form responses 1!A:H"; // Adjust based on your sheet structure
 
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: sheetId,
