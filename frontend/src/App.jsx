@@ -24,6 +24,8 @@ import Footer from "./components/global/Footer";
 import Notification from "./components/admin/notification/Notification";
 import AppointmentAdmin from "./components/admin/appointment/AppoointmentAdmin";
 import FormData from "./components/admin/form/FormData";
+import Chat from "./components/admin/chat/Chat";
+import DoctorChat from "./components/admin/chat/DoctorChat";
 
 const App = () => {
   // User Layout with Navbar
@@ -138,6 +140,10 @@ const App = () => {
           path: "addappointment",
           element: <AppointmentAdd />,
         },
+        {
+          path: "chat-doctor",
+          element: <Chat />,
+        },
       ],
     },
     {
@@ -151,6 +157,10 @@ const App = () => {
         {
           path: "allappointment",
           element: <AppointmentDoctor />,
+        },
+        {
+          path: "chat-user",
+          element: <DoctorChat />,
         },
       ],
     },

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 // import "./style.css";
-import { IoChatboxEllipsesOutline } from "react-icons/io5";
+import { IoChatboxEllipsesOutline, IoSend } from "react-icons/io5";
 import { MdOutlineDashboard } from "react-icons/md";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { LuUsers } from "react-icons/lu";
@@ -11,7 +11,7 @@ import { MdManageHistory } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaBox, FaUser } from "react-icons/fa6";
 import { BsPostcard } from "react-icons/bs";
-import { IoIosNotifications } from "react-icons/io";
+import { IoIosNotifications, IoMdChatboxes } from "react-icons/io";
 // import { AuthContext } from "../../../context/authContext";
 import { AuthContext } from "../../../context/authContext";
 
@@ -255,6 +255,19 @@ const AdminSidebar = () => {
                       </button>
                     </Link>
                   </li>
+                  <li class="hs-accordion" id="projects-accordion">
+                    <Link to="/user/chat-doctor">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="projects-accordion-child"
+                      >
+                        <IoMdChatboxes className="text-lg" />
+                        Chat
+                      </button>
+                    </Link>
+                  </li>
                 </ul>
               )}
               {currentUser.role_id == 2 && (
@@ -283,6 +296,19 @@ const AdminSidebar = () => {
                       >
                         <FaQrcode className="text-lg" />
                         All Appointment
+                      </button>
+                    </Link>
+                  </li>
+                  <li class="hs-accordion" id="projects-accordion">
+                    <Link to="/doctor/chat-user">
+                      <button
+                        type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-lg hover:bg-white/10 focus:outline-none focus:bg-white/10"
+                        aria-expanded="true"
+                        aria-controls="projects-accordion-child"
+                      >
+                        <IoSend className="text-lg" />
+                        Chat
                       </button>
                     </Link>
                   </li>
