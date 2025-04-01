@@ -3,14 +3,9 @@ import { AuthContext } from "../../../context/authContext";
 import { FaUser } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { get, post } from "../../../utils/api";
-import { io } from "socket.io-client";
 import { toast } from "react-toastify";
-
-const socket = io("http://localhost:5050", {
-  autoConnect: false,
-  reconnectionAttempts: 5,
-  reconnectionDelay: 1000,
-});
+import { ADToBS } from "bikram-sambat-js";
+import socket from "./socket";
 
 const DoctorChat = () => {
   const { currentUser } = useContext(AuthContext);
@@ -23,7 +18,9 @@ const DoctorChat = () => {
 
   // Initialize socket connection
   useEffect(() => {
-    socket.connect();
+    if (!socket.connected) {
+      socket.connect();
+    }
 
     const onConnect = () => {
       setIsConnected(true);
@@ -42,12 +39,13 @@ const DoctorChat = () => {
     return () => {
       socket.off("connect", onConnect);
       socket.off("disconnect", onDisconnect);
-      socket.disconnect();
     };
   }, [currentUser?.id]);
 
   // Fetch patients who have messaged this doctor
   useEffect(() => {
+    if (!currentUser?.id) return;
+
     const fetchPatients = async () => {
       try {
         const res = await get(`/api/chat/conversations/${currentUser.id}`);
@@ -88,12 +86,14 @@ const DoctorChat = () => {
 
     const handleNewMessage = (newMessage) => {
       if (
-        newMessage.senderId === selectedPatient.id &&
-        newMessage.receiverId === currentUser.id
+        (newMessage.senderId === currentUser.id &&
+          newMessage.receiverId === selectedPatient?.id) ||
+        (newMessage.senderId === selectedPatient?.id &&
+          newMessage.receiverId === currentUser.id)
       ) {
         setMessages((prev) => {
-          if (prev.some((msg) => msg.id === newMessage.id)) return prev;
-          return [...prev, { ...newMessage, isOwn: false }];
+          if (prev.some((msg) => msg.id === newMessage.id)) return prev; // Prevent duplicates
+          return [...prev, newMessage];
         });
       }
     };
@@ -144,7 +144,6 @@ const DoctorChat = () => {
       });
 
       if (response.success) {
-        // Replace optimistic message with server response
         setMessages((prev) =>
           prev.map((msg) =>
             msg.id === tempId ? { ...response.message, isOwn: true } : msg
@@ -156,7 +155,7 @@ const DoctorChat = () => {
     } catch (error) {
       console.error("Error sending message:", error);
       toast.error("Failed to send message");
-      setMessages((prev) => prev.filter((msg) => msg.id !== tempId));
+      setMessages((prev) => prev.filter((msg) => msg.id !== tempId)); // Remove optimistic message
     }
   };
 
@@ -170,7 +169,7 @@ const DoctorChat = () => {
             isConnected ? "text-green-500" : "text-red-500"
           }`}
         >
-          Status: {isConnected ? "Connected" : "Disconnected"}
+          {/* Status: {isConnected ? "Connected" : "Disconnected"} */}
         </div>
         <ul className="flex flex-col gap-2 mt-4">
           {patients.map((patient) => (
@@ -236,8 +235,12 @@ const DoctorChat = () => {
                 >
                   {msg.message}
                   <div className="text-xs mt-1 opacity-70">
-                    {new Date(msg.timestamp).toLocaleTimeString()}
-                    {msg.isOwn ? " • Sent" : " • Received"}
+                    {msg.created_at
+                      ? `${ADToBS(
+                          new Date(msg.created_at).toISOString().split("T")[0]
+                        )} | 
+       ${new Date(msg.created_at).toLocaleTimeString("ne-NP")}`
+                      : "Loading..."}
                   </div>
                 </span>
               </div>

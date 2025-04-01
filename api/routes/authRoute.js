@@ -4,6 +4,7 @@ import {
   login,
   verifyOtp,
   registerDoctor,
+  logout,
 } from "../controller/auth.js";
 import { checkAdmin, isAuth } from "../middleware/isAuth.js";
 
@@ -14,5 +15,6 @@ route.post("/login", login);
 route.post("/verify-otp", verifyOtp);
 
 route.post("/add-doctor", registerDoctor);
+route.post("/logout", logout);
 
 export default route;
