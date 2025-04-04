@@ -1,67 +1,134 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
     return (
-        <div className=" flex justify-around py-5 gap-[2rem] ">
-            <div className="flex-1 flex flex-col gap-3 text-justify">
-                <Link>
-                    <p className="text-[1.2rem] font-semibold">
-                        AgroHealth&Services
-                    </p>
-                </Link>
-                <p>
-                    Agro Health Services is dedicated to promoting the
-                    well-being of both agriculture and livestock. We provide
-                    expert healthcare solutions, preventive measures, and
-                    guidance for healthier farms and animals.
-                </p>
-            </div>
-            <div className="flex-1">
-                <form action="" className="space-y-3">
-                    <input
-                        type="text"
-                        name="email"
-                        id="email"
-                        placeholder="Email"
-                        className="w-full outline-none border-2 border-gray-300 px-4 py-3 rounded-sm focus:ring-2 focus:border-none focus:ring-primary transition-all"
-                    />
-                    <textarea
-                        type="text"
-                        name="message"
-                        id="message"
-                        placeholder="Message"
-                        className="w-full outline-none border-2 border-gray-300 px-4 py-3 rounded-sm focus:ring-2 focus:border-none focus:ring-primary transition-all"
-                    />
-                    <button
-                        type="submit"
-                        className="w-full bg-primary border-2 border-primary text-white py-3 text-[15px] rounded-sm font-semibold transition-all duration-500 ease-in-out hover:bg-white hover:text-primary"
-                    >
-                        Send
-                    </button>
-                </form>
-            </div>
-            <div className="flex-[0.7]  ">
-                <div className="flex  flex-col  gap-[1rem]">
-                    <Link to="/" className="text-[1.2rem] font-semibold">
-                        AgroHealth&Services
-                    </Link>
-                    <div className="">
-                        <ul className="flex  flex-col gap-[1rem] font-medium text-[15px] leading-[22px]">
-                            <li>Home</li>
+        <footer className="bg-gray-800 text-white py-10">
+            <div className="container mx-auto px-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 w-full justify-between gap-8">
+                    {/* Logo and Description */}
+                    <div className="w-full ">
+                        <h2 className="text-2xl font-bold mb-4">
+                            AgroHealth&Services
+                        </h2>
+                        <p className="text-sm text-gray-400">
+                            Agro Health Services ensures healthier farms and
+                            animals through expert care, prevention, and
+                            guidance.
+                        </p>
+                    </div>
 
-                            <li>Post</li>
+                    {/* Quick Links */}
+                    <div className="w-full">
+                        <h3 className="text-lg font-semibold mb-4">
+                            Quick Links
+                        </h3>
+                        <ul className="space-y-2">
                             <li>
-                                <Link to="/signup">Sign Up</Link>
+                                <a
+                                    href="/about"
+                                    className="text-gray-400 hover:text-white transition"
+                                >
+                                    About Us
+                                </a>
                             </li>
                             <li>
-                                <Link to="/login">Log In</Link>
+                                <a
+                                    href="/services"
+                                    className="text-gray-400 hover:text-white transition"
+                                >
+                                    Services
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/blog"
+                                    className="text-gray-400 hover:text-white transition"
+                                >
+                                    Blog
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/contact"
+                                    className="text-gray-400 hover:text-white transition"
+                                >
+                                    Contact
+                                </a>
                             </li>
                         </ul>
                     </div>
+
+                    {/* Social Media Links */}
+                    <div className="w-full">
+                        <h3 className="text-lg font-semibold mb-4">
+                            Follow Us
+                        </h3>
+                        <div className="flex space-x-4">
+                            <a
+                                href="https://twitter.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-400 hover:text-white transition"
+                            >
+                                <FaTwitter className="text-2xl" />
+                            </a>
+                            <a
+                                href="https://facebook.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-400 hover:text-white transition"
+                            >
+                                <FaFacebook className="text-2xl" />
+                            </a>
+                            <a
+                                href="https://instagram.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-400 hover:text-white transition"
+                            >
+                                <FaInstagram className="text-2xl" />
+                            </a>
+                            <a
+                                href="https://linkedin.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-400 hover:text-white transition"
+                            >
+                                <FaLinkedin className="text-2xl" />
+                            </a>
+                        </div>
+                    </div>
+                    <div className="w-full ">
+                        <h3 className="text-lg font-semibold mb-4">
+                            Newsletter
+                        </h3>
+                        <form className="flex flex-col space-y-2">
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                className=" w-full p-2 rounded bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
+                            />
+                            <button
+                                type="submit"
+                                className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+                            >
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                {/* Copyright Notice */}
+                <div className="border-t border-gray-700 mt-8 pt-8 text-center">
+                    <p className="text-sm text-gray-400">
+                        &copy; {new Date().getFullYear()} AgroHealth&Services.
+                        All rights reserved.
+                    </p>
                 </div>
             </div>
-        </div>
+        </footer>
     );
 };
 
