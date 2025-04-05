@@ -26,6 +26,7 @@ import AppointmentAdmin from "./components/admin/appointment/AppoointmentAdmin";
 import FormData from "./components/admin/form/FormData";
 import Chat from "./components/admin/chat/Chat";
 import DoctorChat from "./components/admin/chat/DoctorChat";
+import EsewaSuccess from "./components/admin/appointment/EsewaSuccess";
 
 const App = () => {
   // User Layout with Navbar
@@ -139,6 +140,10 @@ const App = () => {
         {
           path: "addappointment",
           element: <AppointmentAdd />,
+        },
+        {
+          path: "success",
+          element: <EsewaSuccess />,
         },
         {
           path: "chat-doctor",

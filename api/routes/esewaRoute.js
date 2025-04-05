@@ -3,7 +3,7 @@ import { verifyEsewa, handleEsewaSuccess } from "../controller/esewa.js";
 
 const router = express.Router();
 
-router.get("/verifyEsewa/:id", verifyEsewa);
-router.get("/success/:pid/:uid", handleEsewaSuccess);
+router.get("/verifyEsewa", verifyEsewa);
+router.get("/success", handleEsewaSuccess);
 
 export default router;

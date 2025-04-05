@@ -9,7 +9,7 @@ import esewa from "../../../image/esewa-icon-large.webp";
 
 const AppointmentAdd = () => {
   const navigate = useNavigate();
-  const [paid, setPaid] = useState(false);
+  const [esewa, setEsewa] = useState([]);
   const { currentUser } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     date: "",
@@ -30,31 +30,82 @@ const AppointmentAdd = () => {
     const res = await get("/api/get-doctors", {});
     setDoctor(res);
   };
+  const fetchEsewa = async () => {
+    const res = await get("/api/verifyEsewa");
+    console.log(res, "res");
 
+    setEsewa(res);
+  };
   useEffect(() => {
     fetchDoctor();
+    fetchEsewa();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
 
     if (
-      formData.date == "" ||
-      formData.service == "" ||
-      formData.doctor_id == ""
+      formData.date === "" ||
+      formData.service === "" ||
+      formData.doctor_id === ""
     ) {
       toast.error("All fields are required");
       return;
     }
-    const res = await post("/api/book-appointment", formData);
-    if (res.success == 1) {
-      toast.success(res.message);
-      navigate("/user/userappointment");
-    } else {
-      toast.error(res.message);
+
+    localStorage.setItem("appointmentData", JSON.stringify(formData));
+
+    // Dynamically create form and submit
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
+
+    const fields = {
+      amount: 500, // Total amount for the payment
+      total_amount: 500, // Total amount to be paid
+      failure_url: "http://localhost:5050/esewa-payment-failure", // Failure URL
+      product_code: "EPAYTEST", // Product code, adjust it as needed
+      signature: esewa?.signature, // Signature from eSewa response
+      success_url: "http://localhost:5050/api/success", // Success URL
+      transaction_uuid: esewa?.uuid, // Transaction UUID from eSewa response
+      signed_field_names: "total_amount,transaction_uuid,product_code", // List of field names that are signed
+      tax_amount: 0, // Tax amount, if applicable
+      product_service_charge: 0,
+      product_delivery_charge: 0,
+    };
+
+    // Create hidden inputs for all fields
+    for (const key in fields) {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = key;
+      input.value = fields[key];
+      form.appendChild(input);
     }
+
+    // Append the form to the body and submit it
+    document.body.appendChild(form);
+    form.submit();
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (
+  //     formData.date == "" ||
+  //     formData.service == "" ||
+  //     formData.doctor_id == ""
+  //   ) {
+  //     toast.error("All fields are required");
+  //     return;
+  //   }
+  //   const res = await post("/api/book-appointment", formData);
+  //   if (res.success == 1) {
+  //     toast.success(res.message);
+  //     navigate("/user/userappointment");
+  //   } else {
+  //     toast.error(res.message);
+  //   }
+  // };
 
   return (
     <div>
@@ -107,10 +158,12 @@ const AppointmentAdd = () => {
               ))}
             </select>
           </div>
-              <span className="font-bold text-blue-700">you will be redirect to esewa for payment</span>
+          <span className="font-bold text-blue-700">
+            you will be redirect to esewa for payment
+          </span>
           <button
             onClick={handleSubmit}
-            className="bg-[#437EF7] text-white py-3 rounded-sm font-semibold tracking-[0.48px] "
+            className="bg-[#437EF7] text-white py-3 rounded-sm font-semibold tracking-[0.48px]"
           >
             Add Appointment
           </button>

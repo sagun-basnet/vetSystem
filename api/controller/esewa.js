@@ -7,41 +7,22 @@ import { db } from "../db/db.js";
 dotenv.config();
 
 export const verifyEsewa = async (req, res) => {
-  const proId = req.params.id;
   const uuid = uuidv4();
   const esewaSecret = process.env.ESEWASECRET;
   // console.log(esewaSecret);
+  const message = `total_amount=${500},transaction_uuid=${uuid},product_code=EPAYTEST`;
 
-  axios
-    .get(`http://localhost:5050/api/getSinglePost/${proId}`)
-    .then((response) => {
-      console.log(response.data, " : Esewa controller response data");
-      const productData = response.data;
-      const message = `total_amount=${parseInt(
-        productData.price
-      )},transaction_uuid=${uuid},product_code=EPAYTEST`;
+  const hash = CryptoJS.HmacSHA256(message, esewaSecret);
 
-      const hash = CryptoJS.HmacSHA256(message, esewaSecret);
-
-      const hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
-      return res.json({
-        uuid: uuid,
-        signature: hashInBase64,
-        proId: proId,
-      });
-    })
-    .catch((err) => {
-      console.error("Error in getting seller details", err);
-    });
+  const hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
+  return res.json({
+    uuid: uuid,
+    signature: hashInBase64,
+  });
 };
 
 export const handleEsewaSuccess = async (req, res) => {
   const { data } = req.query;
-  const pid = req.params.pid;
-  const uid = req.params.uid;
-
-  console.log(pid, ":pid");
-  console.log(uid, ":uid");
 
   let decodedString = atob(data);
   decodedString = JSON.parse(decodedString);
@@ -60,17 +41,9 @@ export const handleEsewaSuccess = async (req, res) => {
         // if (result == false) {
         //   throw "Hash value not matched";
         // }
-        const sql =
-          "INSERT into `bookings`(`user_id`, `package_id`, `date`) value(?,?,?)";
-        db.query(sql, [parseInt(uid), parseInt(pid), date], (err, data) => {
-          if (err) {
-            console.error("Error inserting order:", err);
-            return res.status(500).json({ error: "Failed to create booking." });
-          }
-          console.log(data.insertId, ":Result");
-          // After successfully inserting the order, send the redirect response
-          res.redirect(`http://localhost:5173//${pid}`);
-        });
+
+        // After successfully inserting the order, send the redirect response
+        res.redirect(`http://localhost:5173/user/success`);
       } catch (error) {
         console.log("error occoured", error);
       }

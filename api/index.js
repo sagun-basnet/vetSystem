@@ -8,6 +8,7 @@ import userRoute from "./routes/userRoute.js";
 import appointmentRoute from "./routes/appointmentRoute.js";
 import formRoutes from "./routes/formRoute.js";
 import chatRoute from "./routes/chatRoute.js";
+import esewaRoute from "./routes/esewaRoute.js";
 
 import { createServer } from "http";
 import { Server } from "socket.io";
@@ -118,6 +119,7 @@ app.use("/api", adminRoute);
 app.use("/api", postRoute);
 app.use("/api", appointmentRoute);
 app.use("/api", formRoutes);
+app.use("/api", esewaRoute);
 app.use("/api/chat", chatRoute);
 
 server.listen(port, () => {
