@@ -2,10 +2,14 @@ import { db } from "../db/db.js";
 export const createPost = (req, res) => {
   const data = req.body;
   const image = req.file;
+  console.log(image, ":Image");
+
   const q = "insert into post(title, description, image) values(?, ?, ?)";
-  db.query(q, [data.title, data.description, image.path], (err, result) => {
+  db.query(q, [data.title, data.description, image.filename], (err, result) => {
     if (err) return res.status(500).send(err);
-    res.status(201).send({ message: "Post created sucessfully", result });
+    res
+      .status(201)
+      .send({ message: "Post created sucessfully", result, success: 1 });
   });
 };
 

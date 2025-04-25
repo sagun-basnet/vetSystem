@@ -12,7 +12,7 @@ import {
 
 const route = express.Router();
 
-route.delete("/delete-user/:id", isAuth, checkAdmin, deleteUser);
+route.post("/delete-user/:id", isAuth, checkAdmin, deleteUser);
 route.post("/update-user/:id", isAuth, checkAdmin, updateUser);
 route.post("/update-doctor/:id", isAuth, checkAdmin, updateDoctor);
 route.get("/get-user", isAuth, checkAdmin, getUser);

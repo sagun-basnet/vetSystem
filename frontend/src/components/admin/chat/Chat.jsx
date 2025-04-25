@@ -148,7 +148,9 @@ const Chat = () => {
         </div>
 
         <ul className="space-y-2">
-          {doctors.map((doctor) => (
+          {[
+            ...new Map(doctors.map((doc) => [doc.doctor_name, doc])).values(),
+          ].map((doctor) => (
             <li
               key={doctor.doctor_id}
               className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors ${

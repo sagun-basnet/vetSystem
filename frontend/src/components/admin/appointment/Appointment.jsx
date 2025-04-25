@@ -9,13 +9,15 @@ const Appointment = () => {
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  console.log(data, "data");
+
   const [open, setOpen] = useState(false);
   const [id, setId] = useState(null);
   const [singleAppointment, setSingleAppointment] = useState(null);
 
   const fetchData = async () => {
     const res = await get(`/api/getAppointmentByUser/${currentUser.id}`, {});
-    console.log(res);
+    console.log(res, "appointment");
 
     setData(res);
   };
@@ -58,7 +60,7 @@ const Appointment = () => {
   return (
     <div className="flex-1 shadow-lg shadow-gray-300 rounded-md px-3 py-3">
       <div className="flex justify-between">
-        <h1 className="font-medium text-[30px] text-primary">All Appontment</h1>
+        <h1 className="font-medium text-[30px] text-primary">All Apponitment</h1>
         <Link to={"/user/addappointment"}>
           <button className="bg-[#437EF7] py-2 px-6 rounded-md text-white">
             Add Appointment
@@ -104,7 +106,7 @@ const Appointment = () => {
                     {formatDate(row.date)}
                   </td>
                   <td className="px-4 py-2 border-b text-sm text-gray-800">
-                    {row.doctor_name}
+                    {row.name}
                   </td>
                   <td className="px-4 py-2 border-b text-sm text-gray-800">
                     {row.status}

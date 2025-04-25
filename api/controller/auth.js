@@ -4,161 +4,169 @@ import jwt from "jsonwebtoken";
 import { sendMail } from "../middleware/mail.js";
 
 export const register = (req, res) => {
-    const { name, address, phone, email, password, role_id } = req.body;
-    const q = "select * from `users` where `email` = ?";
-    const generateOTP = () => Math.floor(1000 + Math.random() * 9000);
-    const otp = generateOTP();
+  const { name, address, phone, email, password, role_id } = req.body;
+  const profile = req.file?.filename || null; // store filename from upload
+  console.log(profile, ":Profile");
 
-    db.query(q, [email], (err, data) => {
+  const q = "select * from `users` where `email` = ?";
+  const generateOTP = () => Math.floor(1000 + Math.random() * 9000);
+  const otp = generateOTP();
+  console.log(otp, ":OTP");
+
+  db.query(q, [email], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length)
+      return res
+        .status(201)
+        .json({ message: "User already exists.", success: 0 });
+
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+
+    const q = `
+        INSERT INTO users (name, address, phone, email, password, role_id, profile) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)`;
+
+    db.query(
+      q,
+      [name, address, phone, email, hashedPassword, role_id, profile],
+      (err, result) => {
         if (err) return res.status(500).json(err);
-        if (data.length)
-            return res
-                .status(201)
-                .json({ message: "User already exists.", success: 0 });
+        res.status(200).json({
+          message: "User added successfully.",
+          success: 1,
+        });
+      }
+    );
+    // const msg = `<div> <h1>Hi, ${email},This is your OTP: <span style="color:blue">${otp}</span> Please verify it on <a href="http://localhost:5173">AppName</a>.</h1>
+    //                         </div>`;
 
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(password, salt);
-        const q =
-            "insert into users (`name`, `address`, `phone`, `email`, `password`, `role_id`) value(?,?,?,?,?,?)";
-        db.query(
-            q,
-            [name, address, phone, email, hashedPassword, role_id],
-            (err, result) => {
-                if (err) return res.status(500).json(err);
-                res.status(200).json({
-                    message: "User added successfully.",
-                    success: 1,
-                });
-            }
-            // const msg = `<div> <h1>Hi, ${email},This is your OTP: <span style="color:blue">${otp}</span> Please verify it on <a href="http://localhost:5173">AppName</a>.</h1>
-            //                         </div>`;
+    // sendMail({
+    //   receiver: email,
+    //   subject: "Mail Verification",
+    //   text: "msg",
+    //   html: msg,
+    // })
+    //   .then((messageId) => {
+    //     console.log("Email sent successfully with Message ID:", messageId);
+    //     const sql = "UPDATE users SET otp=? WHERE email=?";
+    //     db.query(sql, [otp, email], (err, data) => {
+    //       if (err) {
+    //         res.status(500).send(err);
+    //       } else {
+    //         res.status(200).send({
+    //           success: true,
+    //           message: "User added successfully",
+    //         });
+    //       }
+    //     });
+    //   })
 
-            // sendMail({
-            //   receiver: email,
-            //   subject: "Mail Verification",
-            //   text: "msg",
-            //   html: msg,
-            // })
-            //   .then((messageId) => {
-            //     console.log("Email sent successfully with Message ID:", messageId);
-            //     const sql = "UPDATE users SET otp=? WHERE email=?";
-            //     db.query(sql, [otp, email], (err, data) => {
-            //       if (err) {
-            //         res.status(500).send(err);
-            //       } else {
-            //         res.status(200).send({
-            //           success: true,
-            //           message: "User added successfully",
-            //         });
-            //       }
-            //     });
-            //   })
-
-            // res.status(201).json({ message: "User created successfully.", result });
-        );
-    });
+    // res.status(201).json({ message: "User created successfully.", result });
+  });
 };
 
 export const registerDoctor = (req, res) => {
-    const { name, address, phone, email } = req.body;
+  const { name, address, phone, email } = req.body;
+  const profile = req.file?.filename || null; // store filename from upload
+  console.log(profile, ":Profile");
 
-    const q = "select * from `users` where `email` = ?";
-    const generateOTP = () => Math.floor(1000 + Math.random() * 9000);
-    const otp = generateOTP();
+  const q = "select * from `users` where `email` = ?";
+  const generateOTP = () => Math.floor(1000 + Math.random() * 9000);
+  const otp = generateOTP();
 
-    db.query(q, [email], (err, data) => {
+  db.query(q, [email], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length)
+      return res
+        .status(201)
+        .json({ message: "Doctor already exists.", success: 0 });
+
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync("doctor@123", salt);
+    const q =
+      "insert into users (`name`, `address`, `phone`, `email`, `password`, `role_id`,`isVerified`, `profile`) value(?,?,?,?,?,?,?,?)";
+    db.query(
+      q,
+      [name, address, phone, email, hashedPassword, 2, 1, profile],
+      (err, result) => {
         if (err) return res.status(500).json(err);
-        if (data.length)
-            return res
-                .status(201)
-                .json({ message: "Doctor already exists.", success: 0 });
-
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync("doctor@123", salt);
-        const q =
-            "insert into users (`name`, `address`, `phone`, `email`, `password`, `role_id`,`isVerified`) value(?,?,?,?,?,?,?)";
-        db.query(
-            q,
-            [name, address, phone, email, hashedPassword, 2, 1],
-            (err, result) => {
-                if (err) return res.status(500).json(err);
-                res.status(200).json({
-                    message: "Doctor added successfully.",
-                    success: 1,
-                });
-            }
-        );
-    });
+        res.status(200).json({
+          message: "Doctor added successfully.",
+          success: 1,
+        });
+      }
+    );
+  });
 };
 
 export const login = (req, res) => {
-    const q = "select * from `users` where `email` = ?";
-    db.query(q, [req.body.email], (err, data) => {
-        if (err) return res.status(500).json(err);
-        if (data.length === 0)
-            return res
-                .status(201)
-                .json({ message: "User Not found.", success: 0 });
+  const q = "select * from `users` where `email` = ?";
+  db.query(q, [req.body.email], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length === 0)
+      return res.status(201).json({ message: "User Not found.", success: 0 });
 
-        const checkPassword = bcrypt.compareSync(
-            req.body.password,
-            data[0].password
-        );
+    const checkPassword = bcrypt.compareSync(
+      req.body.password,
+      data[0].password
+    );
 
-        if (!checkPassword)
-            return res
-                .status(201)
-                .json({ message: "Password not match", success: 0 });
+    if (!checkPassword)
+      return res
+        .status(201)
+        .json({ message: "Password not match", success: 0 });
 
-        const token = jwt.sign(
-            { id: data[0].id, role_id: data[0].role_id },
-            "secretkey"
-        );
+    const token = jwt.sign(
+      { id: data[0].id, role_id: data[0].role_id },
+      "secretkey"
+    );
 
-        const { password, ...others } = data[0];
-        res.cookie("accessToken", token, {
-            httpOnly: false,
-        })
-            .status(200)
-            .json({ others, token, success: 1 });
-    });
+    const { password, ...others } = data[0];
+    res
+      .cookie("accessToken", token, {
+        httpOnly: false,
+      })
+      .status(200)
+      .json({ others, token, success: 1 });
+  });
 };
 
 export const verifyOtp = (req, res) => {
-    const { email, otp } = req.body;
+  const { email, otp } = req.body;
 
-    if (!email || !otp) {
-        return res.status(201).send({message:"OTP is required",success: 0});
+  if (!email || !otp) {
+    return res.status(201).send({ message: "OTP is required", success: 0 });
+  }
+
+  const sql = "SELECT * FROM users WHERE email = ? AND otp = ?";
+
+  db.query(sql, [email, otp], (err, result) => {
+    if (err) {
+      return res.status(400).send(err);
     }
-    
 
-    const sql = "SELECT * FROM users WHERE email = ? AND otp = ?";
-
-    db.query(sql, [email, otp], (err, result) => {
+    if (result.length > 0) {
+      const updateSql = "UPDATE users SET isVerified = 1 WHERE email = ?";
+      db.query(updateSql, [email], (err, updateResult) => {
         if (err) {
-            return res.status(400).send(err);
+          res.status(500).send("Failed to update verification status");
         }
-
-        if (result.length > 0) {
-            const updateSql = "UPDATE users SET isVerified = 1 WHERE email = ?";
-            db.query(updateSql, [email], (err, updateResult) => {
-                if (err) {
-                    res.status(500).send(
-                        "Failed to update verification status"
-                    );
-                }
-                res.status(200).json({
-                    message: "Email verified successfully",
-                    data: updateResult,
-                    success: 1,
-                });
-            });
-        } else {
-            res.status(201).send({message:"OTP is invalid!!",success:0});
-        }
-    });
+        res.status(200).json({
+          message: "Email verified successfully",
+          data: updateResult,
+          success: 1,
+        });
+      });
+    } else {
+      res.status(201).send({ message: "OTP is invalid!!", success: 0 });
+    }
+  });
 };
 
 export const logout = (req, res) => {
-    res.clearCookie("accessToken", { sameSite: "none", secure: true }).status(200).json("User has been logged out.");
-}
+  res
+    .clearCookie("accessToken", { sameSite: "none", secure: true })
+    .status(200)
+    .json("User has been logged out.");
+};

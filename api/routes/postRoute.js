@@ -24,7 +24,7 @@ route.post(
   upload.single("image"),
   updatePost
 );
-route.get("/get-posts", isAuth, checkAdmin, getPosts);
+route.get("/get-posts", getPosts);
 route.post("/delete-post/:id", isAuth, checkAdmin, deletePost);
 
 export default route;

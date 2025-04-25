@@ -10,6 +10,7 @@ const FormData = () => {
     try {
       const res = await axios.get("http://localhost:5050/api/form-data");
       setData(res.data.formResponses);
+      console.log(res.data.formResponses);
     } catch (err) {
       console.error(err);
     }
@@ -33,10 +34,10 @@ const FormData = () => {
                 "Name",
                 "Address",
                 "Contact",
+                "Citizenship Number",
                 "Registration Number",
                 "Pan Number",
                 "Agricultural Business",
-                "Production Details",
                 "Action",
               ].map((heading, index) => (
                 <th key={index} className="px-6 py-3 border min-w-[180px]">
@@ -47,9 +48,15 @@ const FormData = () => {
           </thead>
           <tbody>
             {data.map((response, rowIndex) => (
-              <tr key={rowIndex} className="text-center text-gray-800 text-sm even:bg-gray-50">
+              <tr
+                key={rowIndex}
+                className="text-center text-gray-800 text-sm even:bg-gray-50"
+              >
                 {Object.values(response).map((value, colIndex) => (
-                  <td key={colIndex} className="px-6 py-3 border min-w-[180px] whitespace-nowrap">
+                  <td
+                    key={colIndex}
+                    className="px-6 py-3 border min-w-[180px] whitespace-nowrap"
+                  >
                     {value}
                   </td>
                 ))}

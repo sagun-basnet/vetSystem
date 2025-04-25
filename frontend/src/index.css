@@ -4,6 +4,7 @@
 
 * {
   font-family: "Poppins", "Helvetica Neue", Helvetica, Arial;
+  scroll-behavior: smooth;
 }
 th {
   @apply !text-center w-[10rem] border-2;

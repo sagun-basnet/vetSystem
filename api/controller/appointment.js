@@ -23,8 +23,34 @@ export const bookAppointment = (req, res) => {
   });
 };
 
+export const acceptAppointment = (req, res) => {
+  const id = req.params.id;
+  const q = "update appointment set status = 'accepted' where id = ?";
+  db.query(q, [id], (err, result) => {
+    if (err) return res.status(500).json(err);
+    res.status(200).json({
+      message: "Appointment accepted successfully.",
+      result,
+      success: 1,
+    });
+  });
+};
+export const rejectAppointment = (req, res) => {
+  const id = req.params.id;
+  const q = "update appointment set status = 'rejected' where id = ?";
+  db.query(q, [id], (err, result) => {
+    if (err) return res.status(500).json(err);
+    res.status(200).json({
+      message: "Appointment rejected successfully.",
+      result,
+      success: 1,
+    });
+  });
+};
+
 export const getAppointment = (req, res) => {
-  const q = "select * from appointment";
+  const q =
+    "select a.*, a.id as appo_id, u.* from appointment a join users u on a.doctor_id = u.id";
   db.query(q, (err, result) => {
     if (err) return res.status(500).json(err);
     res.status(200).json(result);
@@ -58,7 +84,7 @@ ORDER BY a.created_at DESC;`;
 
 export const getAppointmentByDoctor = (req, res) => {
   const id = parseInt(req.params.id);
-  const q = `SELECT appointment.*, users.*
+  const q = `SELECT appointment.*, appointment.id as appo_id, users.*
   FROM appointment
   INNER JOIN users ON appointment.user_id = users.id where appointment.doctor_id = ?;`;
   db.query(q, [id], (err, result) => {
