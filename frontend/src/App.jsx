@@ -27,6 +27,9 @@ import FormData from "./components/admin/form/FormData";
 import Chat from "./components/admin/chat/Chat";
 import DoctorChat from "./components/admin/chat/DoctorChat";
 import EsewaSuccess from "./components/admin/appointment/EsewaSuccess";
+import VerifyOtp from "./pages/Verifyotp";
+import ForgetPassword from "./components/ForgetPassword";
+import VerifyOtpAndReset from "./components/VerifyOtpAndReset";
 
 const App = () => {
   // User Layout with Navbar
@@ -69,7 +72,15 @@ const App = () => {
     },
     {
       path: "/verify-otp",
-      element: <AuthOTP />,
+      element: <VerifyOtp />,
+    },
+    {
+      path: "/forget-password",
+      element: <ForgetPassword />,
+    },
+    {
+      path: "/verify-otp-reset",
+      element: <VerifyOtpAndReset />,
     },
     {
       path: "/admin",

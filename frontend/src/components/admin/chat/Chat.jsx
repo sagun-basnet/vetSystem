@@ -2,6 +2,10 @@ import { useContext, useEffect, useState, useRef } from "react";
 import { AuthContext } from "../../../context/authContext";
 import { FaUserDoctor } from "react-icons/fa6";
 import { IoSend } from "react-icons/io5";
+import { AiOutlineSearch } from "react-icons/ai";
+import { BsThreeDotsVertical, BsEmojiSmile } from "react-icons/bs";
+import { FiPaperclip } from "react-icons/fi";
+import { IoCallOutline } from "react-icons/io5";
 import { get, post } from "../../../utils/api";
 import { toast } from "react-toastify";
 import { ADToBS } from "bikram-sambat-js";
@@ -135,54 +139,97 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex gap-8 h-[calc(100vh-5rem)]">
+    <div className="flex h-[calc(100vh-5rem)]">
       {/* Doctors List */}
-      <div className="w-1/4 bg-gray-100 p-4 rounded-lg shadow">
-        <h1 className="text-xl font-bold mb-2">Doctors</h1>
-        <div
-          className={`text-sm mb-4 ${
-            isConnected ? "text-green-500" : "text-red-500"
-          }`}
-        >
-          {/* {isConnected ? "Online" : "Offline"} */}
+      <div className="w-96 border-r flex flex-col">
+        <div className="p-4 border-b">
+          <h1 className="text-2xl font-bold">Messages</h1>
         </div>
-
-        <ul className="space-y-2">
-          {[
-            ...new Map(doctors.map((doc) => [doc.doctor_name, doc])).values(),
-          ].map((doctor) => (
-            <li
+        
+        {/* Search */}
+        <div className="px-4 py-3">
+          <div className="flex items-center bg-gray-100 rounded-lg px-3 py-2">
+            <AiOutlineSearch className="text-gray-500 mr-2" />
+            <input
+              type="text"
+              placeholder="Search patients..."
+              className="bg-transparent border-none w-full focus:outline-none text-gray-700"
+            />
+          </div>
+        </div>
+        
+        {/* Doctors List */}
+        <div className="flex-1 overflow-y-auto">
+          {[...new Map(doctors.map((doc) => [doc.doctor_name, doc])).values()].map((doctor, index) => (
+            <div
               key={doctor.doctor_id}
-              className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors ${
-                selectedDoctor?.doctor_id === doctor.doctor_id
-                  ? "bg-blue-500 text-white"
-                  : "hover:bg-gray-200"
+              className={`flex items-center p-4 cursor-pointer hover:bg-gray-50 border-b ${
+                selectedDoctor?.doctor_id === doctor.doctor_id ? "bg-gray-50" : ""
               }`}
               onClick={() => setSelectedDoctor(doctor)}
             >
-              <FaUserDoctor className="mr-3" />
-              {doctor.doctor_name}
-            </li>
+              <div className="h-12 w-12 rounded-full bg-pink-500 flex items-center justify-center text-white font-bold text-xl mr-3">
+                {doctor.doctor_name.charAt(0)}
+              </div>
+              <div className="flex-1">
+                <div className="flex justify-between items-center">
+                  <h3 className="font-medium text-gray-800">{doctor.doctor_name}</h3>
+                  <span className="text-xs text-gray-500">
+                    {index === 0 ? "12:49 PM" : "Apr 25"}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center mt-1">
+                  <p className="text-sm text-gray-600 truncate">{index === 0 ? "hello" : ""}</p>
+                  {index === 0 && (
+                    <span className="bg-green-500 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs">
+                      1
+                    </span>
+                  )}
+                  {index === 1 && (
+                    <span className="bg-green-500 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs">
+                      13
+                    </span>
+                  )}
+                  {index === 2 && (
+                    <span className="bg-green-500 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs">
+                      7
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 flex flex-col border rounded-lg shadow bg-white">
+      <div className="flex-1 flex flex-col bg-white">
         {/* Chat Header */}
-        <div className="bg-blue-500 text-white p-4 rounded-t-lg">
+        <div className="flex items-center justify-between p-4 border-b">
           <div className="flex items-center">
-            <div className="w-10 h-10 bg-white text-blue-500 rounded-full flex items-center justify-center font-bold mr-3">
-              {selectedDoctor?.doctor_name.charAt(0) || "D"}
+            <div className="h-12 w-12 rounded-full bg-pink-500 flex items-center justify-center text-white font-bold text-xl mr-3">
+              {selectedDoctor?.doctor_name.charAt(0) || "S"}
             </div>
-            <h2 className="text-lg font-semibold">
-              {selectedDoctor?.doctor_name || "Select a doctor"}
-            </h2>
+            <div>
+              <h2 className="font-medium text-lg">{selectedDoctor?.doctor_name || "Select a doctor"}</h2>
+              <p className="text-sm text-green-500">
+                <span className="inline-block h-2 w-2 bg-green-500 rounded-full mr-1"></span>
+                Online
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center space-x-4">
+            <button className="text-gray-500 hover:text-gray-700">
+              <IoCallOutline size={20} />
+            </button>
+            <button className="text-gray-500 hover:text-gray-700">
+              <BsThreeDotsVertical size={20} />
+            </button>
           </div>
         </div>
 
         {/* Messages */}
-        <div className="flex-1 p-4 overflow-y-auto">
+        <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
           {messages.length === 0 ? (
             <div className="text-center text-gray-500 mt-10">
               {selectedDoctor ? "No messages yet" : "Select a doctor to chat"}
@@ -196,19 +243,19 @@ const Chat = () => {
                 }`}
               >
                 <div
-                  className={`max-w-3/4 p-3 rounded-lg ${
+                  className={`max-w-md p-3 rounded-lg shadow-sm ${
                     msg.isOwn
                       ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-gray-800"
+                      : "bg-white text-gray-800"
                   }`}
                 >
                   <p>{msg.message}</p>
-                  <div className="text-xs mt-1 opacity-70">
+                  <div className="text-xs mt-1 opacity-70 text-right">
                     {msg.created_at
-                      ? `${ADToBS(
-                          new Date(msg.created_at).toISOString().split("T")[0]
-                        )} | 
-       ${new Date(msg.created_at).toLocaleTimeString("ne-NP")}`
+                      ? `${new Date(msg.created_at).toLocaleTimeString("ne-NP", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}`
                       : "Loading..."}
                   </div>
                 </div>
@@ -220,10 +267,16 @@ const Chat = () => {
 
         {/* Message Input */}
         <div className="p-4 border-t">
-          <div className="flex items-center">
+          <div className="flex items-center bg-gray-50 rounded-full px-4 py-1">
+            <button className="text-gray-500 p-2">
+              <BsEmojiSmile size={20} />
+            </button>
+            <button className="text-gray-500 p-2">
+              <FiPaperclip size={20} />
+            </button>
             <input
               type="text"
-              className="flex-1 border rounded-l-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 border-none bg-transparent px-2 py-2 focus:outline-none"
               placeholder="Type your message..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -231,11 +284,11 @@ const Chat = () => {
               disabled={!selectedDoctor}
             />
             <button
-              className="bg-blue-500 text-white p-3 rounded-r-lg hover:bg-blue-600 disabled:opacity-50"
+              className="bg-green-500 text-white p-2 rounded-full disabled:opacity-50"
               onClick={sendMessage}
               disabled={!selectedDoctor || !message.trim()}
             >
-              <IoSend />
+              <IoSend size={16} />
             </button>
           </div>
         </div>

@@ -12,7 +12,8 @@ export const AuthContextProvider = ({ children }) => {
   const login = async (inputs) => {
     const res = await post("/api/login", inputs);
     setCurrentUser(res.others);
-    console.log(res.others, "res");
+    console.log(res, "res");
+    if (res.success === 0) return res; // If login fails, return the response
     socket.connect(); // Connect when user logs in
     socket.emit("join", res.others.id);
 
