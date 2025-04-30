@@ -10,38 +10,137 @@ import {
   MessageSquare,
   Award,
   FileText,
+  Save,
+  X,
 } from "lucide-react";
 import { AuthContext } from "../../../context/authContext";
-import axios from "axios";
-import { get } from "../../../utils/api";
+import { get, post } from "../../../utils/api";
+import { toast } from "react-toastify";
 
 const UserProfile = () => {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
   const [count, setCount] = useState(0);
-  const [user, setUser] = useState({
-    name: "Sagun Basnet",
-    email: "testpp@gmail.com",
-    phone: "9812384199",
-    address: "Itahari-19",
-    role: "Premium Member",
-    joinedDate: "April 2023",
+  const [editMode, setEditMode] = useState(false);
+  const [profileEditMode, setProfileEditMode] = useState(false);
+  const [userData, setUserData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
     bio: "Agricultural enthusiast with 5+ years of experience in sustainable farming practices.",
   });
 
+  const getUser = async () => {
+    try {
+      const res = await get(`/api/get-single-user/${currentUser.id}`);
+      console.log(res);
+      if (res.success) {
+        setUserData({
+          name: res.result[0].name || "",
+          email: res.result[0].email || "",
+          phone: res.result[0].phone || "",
+          address: res.result[0].address || "",
+          bio: res.result[0].bio || userData.bio,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    // if (currentUser) {
+    //   setUserData({
+    //     name: currentUser.name || "",
+    //     phone: currentUser.phone || "",
+    //     address: currentUser.address || "",
+    //     bio: userData.bio, // Keep the existing bio
+    //   });
+    // }
+    getUser();
+  }, [currentUser]);
+
   const fetchAppointmentCount = async () => {
-    await get(`/api/getAppointmentByDoctor/${parseInt(currentUser?.id)}`)
-      .then((res) => {
+    if (!currentUser?.id) return;
+
+    try {
+      // console.log(currentUser);
+      if (currentUser.role_id === 3) {
+        const res = await get(
+          `/api/getAppointmentByUser/${parseInt(currentUser.id)}`
+        );
+        console.log(res);
         setCount(res.length);
-        console.log(res, "Appointment Count", res.length);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        getUser();
+        return;
+      } else {
+        const res = await get(
+          `/api/getAppointmentByDoctor/${parseInt(currentUser.id)}`
+        );
+        console.log(res);
+
+        setCount(res.length);
+        getUser();
+        return;
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     fetchAppointmentCount();
-  }, []);
+  }, [currentUser]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = async () => {
+    // Here you would implement the API call to update the user data
+    try {
+      const res = await post(
+        `/api/update-user/${parseInt(currentUser.id)}`,
+        userData
+      );
+      console.log(res);
+      if (res.success) {
+        toast.success(res.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    // console.log("Saving user data:", userData);
+    // For now, we'll just exit edit mode
+    setEditMode(false);
+  };
+
+  const handleCancel = () => {
+    // Reset to original data
+    if (currentUser) {
+      setUserData({
+        name: currentUser.name || "",
+        email: currentUser.email || "",
+        phone: currentUser.phone || "",
+        address: currentUser.address || "",
+        bio: userData.bio,
+      });
+    }
+    setEditMode(false);
+  };
+
+  const handleProfileEdit = () => {
+    setProfileEditMode(true);
+  };
+
+  const handleProfileSave = () => {
+    // Here you would implement the API call to update the bio
+    console.log("Saving bio:", userData.bio);
+    setProfileEditMode(false);
+  };
+
   return (
     <div className="bg-gray-50 p-6 rounded-lg">
       <div className="flex flex-col md:flex-row gap-6">
@@ -50,7 +149,11 @@ const UserProfile = () => {
           <div className="relative">
             <div className="w-32 h-32 rounded-full overflow-hidden mb-4 bg-gray-100">
               <img
-                src={`http://localhost:5050/images/${currentUser?.profile}`}
+                src={
+                  currentUser?.profile
+                    ? `http://localhost:5050/images/${currentUser.profile}`
+                    : "/api/placeholder/150/150"
+                }
                 alt="Profile"
                 className="w-full h-full object-cover"
               />
@@ -70,18 +173,56 @@ const UserProfile = () => {
           </span>
           <p className="text-gray-500 text-sm mt-1">
             Member since{" "}
-            {new Date(currentUser?.created_at).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
+            {currentUser?.created_at &&
+              new Date(currentUser.created_at).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
           </p>
 
           <div className="w-full border-t mt-4 pt-4">
-            <p className="text-gray-600 text-sm">{user.bio}</p>
+            {profileEditMode ? (
+              <div className="space-y-3">
+                <textarea
+                  name="bio"
+                  value={userData.bio}
+                  onChange={handleInputChange}
+                  className="w-full p-2 border rounded-md text-sm"
+                  rows="3"
+                />
+                <div className="flex gap-2 justify-end">
+                  <button
+                    onClick={() => setProfileEditMode(false)}
+                    className="p-1 text-red-500 rounded-md hover:bg-red-50"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={handleProfileSave}
+                    className="p-1 text-green-600 rounded-md hover:bg-green-50"
+                  >
+                    <Save className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex justify-between">
+                <p className="text-gray-600 text-sm">{userData.bio}</p>
+                <button
+                  onClick={handleProfileEdit}
+                  className="text-green-600 ml-2"
+                >
+                  <Edit className="h-4 w-4" />
+                </button>
+              </div>
+            )}
           </div>
 
-          <button className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg">
+          <button
+            className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg"
+            onClick={() => setEditMode(true)}
+          >
             Edit Profile
           </button>
         </div>
@@ -92,10 +233,32 @@ const UserProfile = () => {
           <div className="bg-white rounded-lg shadow p-6 mb-6">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold">Personal Information</h3>
-              <button className="text-green-600 flex items-center gap-1">
-                <Edit className="h-4 w-4" />
-                <span className="text-sm">Edit</span>
-              </button>
+              {!editMode ? (
+                <button
+                  className="text-green-600 flex items-center gap-1"
+                  onClick={() => setEditMode(true)}
+                >
+                  <Edit className="h-4 w-4" />
+                  <span className="text-sm">Edit</span>
+                </button>
+              ) : (
+                <div className="flex gap-2">
+                  <button
+                    className="text-red-500 flex items-center gap-1"
+                    onClick={handleCancel}
+                  >
+                    <X className="h-4 w-4" />
+                    <span className="text-sm">Cancel</span>
+                  </button>
+                  <button
+                    className="text-green-600 flex items-center gap-1"
+                    onClick={handleSave}
+                  >
+                    <Save className="h-4 w-4" />
+                    <span className="text-sm">Save</span>
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -103,9 +266,19 @@ const UserProfile = () => {
                 <div className="bg-green-100 p-2 rounded-full text-green-600">
                   <User className="h-5 w-5" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <p className="text-sm text-gray-500">Full Name</p>
-                  <p className="font-medium">{currentUser?.name}</p>
+                  {editMode ? (
+                    <input
+                      type="text"
+                      name="name"
+                      value={userData.name}
+                      onChange={handleInputChange}
+                      className="w-full p-1 border rounded text-sm"
+                    />
+                  ) : (
+                    <p className="font-medium">{userData.name}</p>
+                  )}
                 </div>
               </div>
 
@@ -113,9 +286,14 @@ const UserProfile = () => {
                 <div className="bg-green-100 p-2 rounded-full text-green-600">
                   <Mail className="h-5 w-5" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <p className="text-sm text-gray-500">Email</p>
-                  <p className="font-medium">{currentUser?.email}</p>
+                  <p className="font-medium">{userData.email}</p>
+                  {editMode && (
+                    <p className="text-xs text-gray-500 italic mt-1">
+                      Email cannot be changed
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -123,9 +301,19 @@ const UserProfile = () => {
                 <div className="bg-green-100 p-2 rounded-full text-green-600">
                   <Phone className="h-5 w-5" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <p className="text-sm text-gray-500">Phone</p>
-                  <p className="font-medium">{currentUser?.phone}</p>
+                  {editMode ? (
+                    <input
+                      type="text"
+                      name="phone"
+                      value={userData.phone}
+                      onChange={handleInputChange}
+                      className="w-full p-1 border rounded text-sm"
+                    />
+                  ) : (
+                    <p className="font-medium">{userData.phone}</p>
+                  )}
                 </div>
               </div>
 
@@ -133,9 +321,19 @@ const UserProfile = () => {
                 <div className="bg-green-100 p-2 rounded-full text-green-600">
                   <MapPin className="h-5 w-5" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <p className="text-sm text-gray-500">Address</p>
-                  <p className="font-medium">{currentUser?.address}</p>
+                  {editMode ? (
+                    <input
+                      type="text"
+                      name="address"
+                      value={userData.address}
+                      onChange={handleInputChange}
+                      className="w-full p-1 border rounded text-sm"
+                    />
+                  ) : (
+                    <p className="font-medium">{userData.address}</p>
+                  )}
                 </div>
               </div>
             </div>

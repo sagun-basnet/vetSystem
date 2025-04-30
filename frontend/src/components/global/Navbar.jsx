@@ -17,10 +17,10 @@ const Navbar = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        profileDropdownOpen && 
-        profileRef.current && 
+        profileDropdownOpen &&
+        profileRef.current &&
         !profileRef.current.contains(event.target) &&
-        dropdownRef.current && 
+        dropdownRef.current &&
         !dropdownRef.current.contains(event.target)
       ) {
         setProfileDropdownOpen(false);
@@ -44,11 +44,14 @@ const Navbar = () => {
   // Determine dashboard link based on user role
   const getDashboardLink = () => {
     if (!currentUser) return "/user";
-    
+
     switch (currentUser.role_id) {
-      case 1: return "/admin";
-      case 2: return "/doctor";
-      default: return "/user";
+      case 1:
+        return "/admin";
+      case 2:
+        return "/doctor";
+      default:
+        return "/user";
     }
   };
 
@@ -56,7 +59,11 @@ const Navbar = () => {
     <header className="flex justify-center h-16 bg-white shadow-sm z-50 sticky top-0 text-gray-800 lg:h-20">
       <nav className="flex justify-between items-center w-full max-w-7xl px-4 md:px-6 lg:px-8 relative">
         {/* Logo */}
-        <Link to="/" onClick={handleLinkClick} className="font-bold text-lg md:text-xl">
+        <Link
+          to="/"
+          onClick={handleLinkClick}
+          className="font-bold text-lg md:text-xl"
+        >
           AgroHealth&Services
         </Link>
 
@@ -69,17 +76,23 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/posts" className="hover:text-primary transition-colors">
+              <a href="#post" className="hover:text-primary transition-colors">
                 Post
+              </a>
+            </li>
+            <li>
+              <Link
+                to="/doctor-list"
+                className="hover:text-primary transition-colors"
+              >
+                Doctor list
               </Link>
             </li>
             <li>
-              <Link to="/resources" className="hover:text-primary transition-colors">
-                Resources
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" className="hover:text-primary transition-colors">
+              <Link
+                to="/contact"
+                className="hover:text-primary transition-colors"
+              >
                 Contacts
               </Link>
             </li>
@@ -107,10 +120,10 @@ const Navbar = () => {
               >
                 {currentUser?.name.charAt(0).toUpperCase()}
               </button>
-              
+
               {/* Profile Dropdown */}
               {profileDropdownOpen && (
-                <div 
+                <div
                   ref={dropdownRef}
                   className="absolute top-12 right-0 w-64 bg-white rounded-md shadow-lg p-4 border flex flex-col gap-3"
                 >
@@ -119,16 +132,18 @@ const Navbar = () => {
                       {currentUser?.name.charAt(0).toUpperCase()}
                     </div>
                     <h3 className="font-bold text-lg">{currentUser?.name}</h3>
-                    <p className="text-sm text-gray-600">{currentUser?.email}</p>
+                    <p className="text-sm text-gray-600">
+                      {currentUser?.email}
+                    </p>
                   </div>
-                  
-                  <Link 
+
+                  <Link
                     to={getDashboardLink()}
                     className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded hover:bg-opacity-90 transition-colors"
                   >
                     <FaHouseUser /> Profile
                   </Link>
-                  
+
                   <button
                     onClick={handleLogout}
                     className="flex items-center justify-center gap-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
@@ -155,7 +170,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <button 
+        <button
           className="lg:hidden p-2"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
@@ -172,22 +187,38 @@ const Navbar = () => {
           <div className="lg:hidden absolute top-16 left-0 right-0 bg-white shadow-lg rounded-b-md z-50">
             <ul className="flex flex-col p-4 gap-4">
               <li>
-                <Link to="/" onClick={handleLinkClick} className="block p-2 hover:bg-gray-100 rounded">
+                <Link
+                  to="/"
+                  onClick={handleLinkClick}
+                  className="block p-2 hover:bg-gray-100 rounded"
+                >
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/posts" onClick={handleLinkClick} className="block p-2 hover:bg-gray-100 rounded">
+                <Link
+                  to="/posts"
+                  onClick={handleLinkClick}
+                  className="block p-2 hover:bg-gray-100 rounded"
+                >
                   Post
                 </Link>
               </li>
               <li>
-                <Link to="/resources" onClick={handleLinkClick} className="block p-2 hover:bg-gray-100 rounded">
+                <Link
+                  to="/resources"
+                  onClick={handleLinkClick}
+                  className="block p-2 hover:bg-gray-100 rounded"
+                >
                   Resources
                 </Link>
               </li>
               <li>
-                <Link to="/contact" onClick={handleLinkClick} className="block p-2 hover:bg-gray-100 rounded">
+                <Link
+                  to="/contact"
+                  onClick={handleLinkClick}
+                  className="block p-2 hover:bg-gray-100 rounded"
+                >
                   Contacts
                 </Link>
               </li>
@@ -202,7 +233,7 @@ const Navbar = () => {
                   </Link>
                 </li>
               )}
-              
+
               {/* Mobile Auth Buttons */}
               {currentUser ? (
                 <li className="mt-2 border-t pt-4">
@@ -232,15 +263,15 @@ const Navbar = () => {
                 </li>
               ) : (
                 <li className="mt-2 border-t pt-4 grid grid-cols-2 gap-2">
-                  <Link 
-                    to="/signup" 
+                  <Link
+                    to="/signup"
                     onClick={handleLinkClick}
                     className="block text-center p-2 border border-primary text-primary rounded"
                   >
                     Sign Up
                   </Link>
-                  <Link 
-                    to="/login" 
+                  <Link
+                    to="/login"
                     onClick={handleLinkClick}
                     className="block text-center p-2 bg-primary text-white rounded"
                   >

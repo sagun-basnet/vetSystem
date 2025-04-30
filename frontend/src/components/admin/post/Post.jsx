@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { get } from "../../../utils/api";
+import { get, post } from "../../../utils/api";
 import { Search, RefreshCw, FileText, Edit, Trash2, Image } from "lucide-react";
+import { toast } from "react-toastify";
 
 const Post = () => {
   const navigate = useNavigate();
@@ -24,9 +25,17 @@ const Post = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+  const handleDelete = (id) => async () => {
+    try {
+      await post(`/api/delete-post/${id}`, {});
+      toast.success("Post deleted successfully");
+      fetchData(); // Refresh the data after deletion
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
   const handleUpdatePost = (id) => {
-    navigate(`/admin/updatepost/${id}`, {
+    navigate(`/admin/update-post/${id}`, {
       state: { post_id: id },
     });
   };
@@ -192,7 +201,10 @@ const Post = () => {
                         <Edit className="h-4 w-4 mr-1" />
                         Edit
                       </button>
-                      <button className="flex items-center px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors">
+                      <button
+                        onClick={handleDelete(post.id)}
+                        className="flex items-center px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"
+                      >
                         <Trash2 className="h-4 w-4 mr-1" />
                         Delete
                       </button>

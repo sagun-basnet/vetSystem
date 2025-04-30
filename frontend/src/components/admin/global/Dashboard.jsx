@@ -110,13 +110,13 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="bg-gray-50 px-6 py-3">
-            <a
-              href="/users"
+            <Link
+              to="/admin/user"
               className="text-sm text-blue-600 font-medium flex items-center"
             >
               View all users
               <ChevronRight size={16} className="ml-1" />
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -140,13 +140,13 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="bg-gray-50 px-6 py-3">
-            <a
-              href="/doctors"
+            <Link
+              to="/admin/doctor"
               className="text-sm text-purple-600 font-medium flex items-center"
             >
               View all doctors
               <ChevronRight size={16} className="ml-1" />
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -170,13 +170,13 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="bg-gray-50 px-6 py-3">
-            <a
-              href="/posts"
+            <Link
+              to="/admin/post"
               className="text-sm text-green-600 font-medium flex items-center"
             >
               View all posts
               <ChevronRight size={16} className="ml-1" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>

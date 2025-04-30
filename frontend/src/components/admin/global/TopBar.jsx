@@ -244,8 +244,20 @@ const Topbar = () => {
                       Signed in as
                     </p>
                     <p class="text-sm font-medium text-gray-800 dark:text-neutral-200">
-                      james@site.com
+                      {currentUser?.email}
                     </p>
+                  </div>
+                  <div class="p-1.5 space-y-0.5">
+                    <span
+                      class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-red-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:hover:bg-neutral-700  dark:focus:bg-neutral-700 dark:focus:text-neutral-300"
+                      onClick={() => {
+                        navigate("/");
+                        // toast.success("Logout successfully");
+                      }}
+                    >
+                      <IoIosLogOut className=" h-[18px] w-[18px]" />
+                      Home
+                    </span>
                   </div>
                   <div class="p-1.5 space-y-0.5">
                     <span

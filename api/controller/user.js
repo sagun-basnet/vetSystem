@@ -22,27 +22,26 @@ export const singleUser = (req, res) => {
   const q = "select * from `users` where `id` = ?";
   db.query(q, [id], (err, result) => {
     if (err) return res.status(500).json(err);
-    res.status(200).json({ message: "User fetch successfully.", result });
+    res
+      .status(200)
+      .json({ message: "User fetch successfully.", result, success: 1 });
   });
 };
 
 export const updateUser = (req, res) => {
   const id = req.params.id;
-  const { name, address, phone, email, password, role_id } = req.body;
-  const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(password, salt);
+  console.log(id);
+  console.log(req.body);
+
+  const { name, address, phone } = req.body;
   const q =
-    "update `users` set `name` = ?, `address` = ?, `phone` = ?, `email` = ?, `password` = ?, `role_id` = ? where `id` = ?";
-  db.query(
-    q,
-    [name, address, phone, email, hashedPassword, role_id, id],
-    (err, result) => {
-      if (err) return res.status(500).json(err);
-      res
-        .status(200)
-        .json({ message: "User updated successfully.", success: 1 });
-    }
-  );
+    "update `users` set `name` = ?, `address` = ?, `phone` = ? where `id` = ?";
+  db.query(q, [name, address, phone, id], (err, result) => {
+    if (err) return res.status(500).json(err);
+    res
+      .status(200)
+      .json({ message: "User updated successfully.", success: 1, result });
+  });
 };
 export const updateDoctor = (req, res) => {
   const id = req.params.id;

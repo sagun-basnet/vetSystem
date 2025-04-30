@@ -30,6 +30,9 @@ import EsewaSuccess from "./components/admin/appointment/EsewaSuccess";
 import VerifyOtp from "./pages/Verifyotp";
 import ForgetPassword from "./components/ForgetPassword";
 import VerifyOtpAndReset from "./components/VerifyOtpAndReset";
+import DoctorListPage from "./pages/DoctorListPage";
+import ContactPage from "./pages/ContactPage";
+import EditPost from "./components/admin/post/EditPost";
 
 const App = () => {
   // User Layout with Navbar
@@ -59,6 +62,14 @@ const App = () => {
         {
           path: "/",
           element: <HomePage />,
+        },
+        {
+          path: "/doctor-list",
+          element: <DoctorListPage />,
+        },
+        {
+          path: "/contact",
+          element: <ContactPage />,
         },
       ],
     },
@@ -129,6 +140,10 @@ const App = () => {
         {
           path: "addpost",
           element: <PostAdd />,
+        },
+        {
+          path: "update-post/:id",
+          element: <EditPost />,
         },
         {
           path: "appointment",

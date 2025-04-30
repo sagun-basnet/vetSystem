@@ -4,6 +4,7 @@ import {
   getPosts,
   deletePost,
   updatePost,
+  getSinglePost,
 } from "../controller/post.js";
 import upload from "../middleware/multerConfig.js";
 import { isAuth, checkAdmin } from "../middleware/isAuth.js";
@@ -18,13 +19,14 @@ route.post(
   createPost
 );
 route.post(
-  "/update-post",
+  "/update-post/:id",
   isAuth,
   checkAdmin,
   upload.single("image"),
   updatePost
 );
 route.get("/get-posts", getPosts);
+route.get("/get-single-post/:id", getSinglePost);
 route.post("/delete-post/:id", isAuth, checkAdmin, deletePost);
 
 export default route;
